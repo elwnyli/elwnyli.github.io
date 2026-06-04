@@ -22,7 +22,7 @@
     --radius-lg: 18px;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box;  cursor: url("daisy-cursor.png") 12 12, auto;}
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 /* 全站光标：小花朵 */
 body {
