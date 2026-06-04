@@ -265,41 +265,15 @@
             <div class="prompt-text">帮我部署到网上 / 我想让其他人也能访问我的网站</div>
         </div>
 
-        <p>以下是我实际经历的完整过程——</p>
-
-        <h3 style="font-size:1rem;margin-top:20px;">方案一：GitHub Pages —— 失败了</h3>
-        <p>Claude Code 首先尝试了 GitHub Pages。但因为网络问题（GitHub 在国内被墙），连不上，放弃了。</p>
-
-        <h3 style="font-size:1rem;margin-top:16px;">方案二：Gitee Pages —— 也失败了</h3>
-        <p>代码成功推到了 Gitee（码云，国内版 GitHub），但在后台找了很久，Gitee Pages 入口藏得太深，而且需要实名认证。</p>
-
-        <div class="img-placeholder">
-            <div><strong>📷 待配图</strong>Gitee 仓库界面，红圈标出「服务」菜单和里面找不到 Pages 的情况</div>
-        </div>
-
-        <h3 style="font-size:1rem;margin-top:16px;">方案三：Netlify —— 成功了…一段时间</h3>
-        <p>Claude Code 用 Netlify 部署成功。拖拽上传就行，很方便。具体过程：</p>
-        <p>1. Claude Code 用命令行把网站文件打包上传到 Netlify</p>
-        <p>2. 获得了一个临时网址</p>
-        <p>3. 我打开认领链接，用 GitHub 账号登录 Netlify</p>
-        <p>4. 在 Netlify 后台把网站名从随机字符改成了 elwynlee</p>
-        <p>5. 网站顺利上线：elwynlee.netlify.app</p>
-
-        <h3 style="font-size:1rem;margin-top:16px;">方案四：Netlify 额度用完 → 迁到 Vercel</h3>
-        <p>使用了一段时间后，因为我频繁更新网站（一天部署好几次），Netlify 的免费额度用完了，部署被冻结。</p>
-        <p>于是 Claude Code 帮我换到了 <strong>Vercel</strong>，同样免费，额度更宽松：</p>
-        <p>1. Claude Code 帮我登录 Vercel，用命令 `npx vercel --prod --yes` 一键部署</p>
-        <p>2. 获得新网址：elwynlee-site.vercel.app</p>
-        <p>3. 还帮我创建了一个 `更新网站.bat` 文件</p>
-
-        <div class="img-placeholder">
-            <div><strong>📷 待配图</strong>Vercel 部署成功画面</div>
-        </div>
+        <p>前面试了几个方案都失败了（网络被墙、找不到入口、额度用完），最终 Claude Code 用 <strong>GitHub Pages</strong> 搞定了：</p>
+        <p>1. 帮我创建 GitHub 仓库，通过 API 上传所有网页文件</p>
+        <p>2. 自动启用 GitHub Pages</p>
+        <p>3. 写了一个 Python 脚本，以后双击「更新网站.bat」就能一键更新</p>
+        <p>4. 最终网址：elwnyli.github.io</p>
 
         <div class="tip">
-            <div class="tip-title">最终经验</div>
-            <p>经历了四个方案才最终稳定下来：GitHub（被墙）→ Gitee（找不到 Pages）→ Netlify（额度用完）→ Vercel（目前最佳）。</p>
-            <p>重点不是哪个平台最好，而是<strong>Claude Code 会帮你不断尝试</strong>。你不需要自己研究这些平台，告诉它「帮我部署」就行。</p>
+            <div class="tip-title">关键经验</div>
+            <p>前面失败了四次，但<strong>每次失败 Claude Code 都会自动换下一个方案</strong>。你只需要说「帮我部署」，它会一直试到成功为止。</p>
         </div>
     </section>
 
