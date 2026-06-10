@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>VLM Bridge — 土豆熬孬土豆</title>
     <meta name="description" content="让 DeepSeek / Kimi 看懂图片的 Claude Code 扩展技能，小白也能装。">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Noto+Serif+SC:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="site.css">
 </head>
 <body>
@@ -52,7 +55,483 @@
         <p>Claude Code 会自动完成全部配置。配完后<strong>必须重启 Claude Code</strong>。</p>
     </div>
 
-    <script id="guide-content" type="text/plain" style="display:none">IyBWTE0gQnJpZGdlIOS9v+eUqOaMh+WNlwoK6K6pIERlZXBTZWVr44CBS2ltaSDnrYnnuq/mlofmnKzmqKHlnovpgJrov4flpJbpg6jop4bop4nmqKHlnovpl7TmjqXnkIbop6Plm77niYfjgIIKCi0tLQoKIyMg4pqg77iPIOWPkee7mSBDbGF1ZGUgQ29kZSDkuYvliY3vvIzkvaDpnIDopoHlhYjlh4blpIflpb0KCioq5L2g5b+F6aG75YWI5pyJ5LiA5Liq6KeG6KeJ5qih5Z6L55qEIEFQSSBLZXkqKu+8jOS4iemAieS4gO+8mgoKfCDmnI3liqHllYYgfCDmgI7kuYjojrflj5YgfCDlhY3otLnpop3luqYgfAp8LS0tLS0tLS18LS0tLS0tLS0tfC0tLS0tLS0tLXwKfCBNb2RlbFNjb3Bl77yI5o6o6I2Q77yJIHwg5rOo5YaMIFttb2RlbHNjb3BlLmNuXShodHRwczovL21vZGVsc2NvcGUuY24pIOKGkiDorr7nva4g4oaSIEFQSSBLZXnvvJsqKuazqOaEj+i/mOimgee7keWumumYv+mHjOS6kei0puWPt++8gSoqIHwg5pyJIHwKfCBTaWxpY29uRmxvdyB8IOazqOWGjCBbc2lsaWNvbmZsb3cuY25dKGh0dHBzOi8vc2lsaWNvbmZsb3cuY24pIOKGkiDojrflj5YgS2V5IHwg5pyJIHwKfCBPcGVuQUkgfCDpnIDopoHnu5HljaHvvIxLZXkg5pivIGBzay1gIOW8gOWktCB8IOaXoCB8Cgrmi7/liLAgS2V5IOS5i+WQju+8jOaKiui/meS7veaWh+aho+WPkee7mSBDbGF1ZGUgQ29kZe+8jOWvueWug+ivtO+8mgoKPiDluK7miJHmjInnhafov5nku73mlofmoaPphY3nva4gVkxNIEJyaWRnZe+8jOaIkeeahCBBUEkgS2V5IOaYryB4eHjvvIjmm7/mjaLmiJDkvaDnmoQgS2V577yJCgpDbGF1ZGUgQ29kZSDkvJroh6rliqjlrozmiJDmiYDmnInmk43kvZzvvJrliJvlu7rmlofku7blpLnjgIHkv53lrZjohJrmnKzjgIHloavlhaUgS2V544CB5rOo5YaMIEhvb2vjgILkvaDlj6rpnIDopoHphY3lkIjnoa7orqTljbPlj6/jgIIKCumFjee9ruWujOaIkOWQju+8jCoq5b+F6aG76YeN5ZCvIENsYXVkZSBDb2RlKiog5omN5Lya55Sf5pWI44CCCgotLS0KCj4g6L+Z5Lu95paH5qGj55qE6YeN54K55LiN5piv4oCd5bC95Y+v6IO95aSa5Zyw6Ieq5Yqo5Y+R546w5Zu+54mH4oCd77yM6ICM5piv4oCd5Y+q5YiG5p6Q5b2T5YmN6L+Z6L2u55So5oi35piO56Gu5o+Q5Lqk55qE5Zu+54mH4oCd44CC5ZCm5YiZ5b6I5a655piT5oqK5Y6G5Y+y5oiq5Zu+44CB5pen57yT5a2Y5oiW5pyA6L+R55uu5b2V6YeM55qE5peg5YWz5Zu+54mH5LiA6LW36YCB57uZ6KeG6KeJ5qih5Z6L77yM5a+86Ie05qih5Z6L5Zue562U5pe25re35YWl5LmL5YmN5Zu+54mH55qE5YaF5a6544CCCgotLS0KCiMjIOebruaghwoKQ2xhdWRlIENvZGUg55qEIGBVc2VyUHJvbXB0U3VibWl0YCBIb29rIOWcqOeUqOaIt+WPkea2iOaBr+WJjeaJp+ihjO+8mgoKMS4g6K+G5Yir5b2T5YmNIHByb21wdCDkuK3mmI7noa7mj5DkuqTnmoTlm77niYfjgIIKMi4g6LCD55So5LiA5LiqIE9wZW5BSS1jb21wYXRpYmxlIOinhuinieaooeWei++8jOaKiuWbvueJh+i9rOaIkOaWh+Wtl+aPj+i/sOOAggozLiDmiorigJzmnKzova7lm77niYfliIbmnpDnu5PmnpzigJ3ms6jlhaUgcHJvbXB044CCCjQuIERlZXBTZWVrIOetiee6r+aWh+acrOaooeWei+WfuuS6jui/meauteaWh+Wtl+WbnuetlOOAggoKLS0tCgojIyDorr7orqHljp/liJkKCiMjIyDlvZPliY3ova7kvJjlhYgKCuWPquWIhuaekOW9k+WJjei9rueUqOaIt+aYjuehruaPkOS6pOeahOWbvueJh++8mgoKLSBwcm9tcHQg5Lit55qEIGBbSW1hZ2UgI05dYCDljaDkvY3nrKbjgIIKLSBwcm9tcHQg5Lit5piO56Gu5YaZ5Ye655qE5Zu+54mH5paH5Lu26Lev5b6E44CCCi0g5b2TIHByb21wdCDmmI7noa7ooajovr7igJznnIvov5nlvKDlm74gLyDmiKrlm74gLyDlm77niYcgLyDmiqXplJnigJ3nrYnmhI/lm77ml7bvvIzor7vlj5blvZPliY3liarotLTmnb/lm77niYfjgIIKCuS4jeimgem7mOiupOaJq+aPj+WOhuWPsuebruW9leOAgeS4i+i9veebruW9leOAgeahjOmdouebruW9leaIluaVtOS4qiBgfi8uY2xhdWRlL2ltYWdlLWNhY2hlYCDph4znmoTmnIDov5Hlm77niYfjgIIKCiMjIyDlpJrlm77mlK/mjIEKCuWmguaenOW9k+WJjei9ruaYjuehruaPkOS6pOWkmuW8oOWbvu+8jOWwseW6lOivpeS4gOi1t+WIhuaekOOAggoK5L6L5aaC77yaCgpgYGB0ZXh0CltJbWFnZSAjMV0gW0ltYWdlICMyXSDluK7miJHmr5TovoPov5nkuKTlvKDlm74KYGBgCgrmraTml7blhYHorrjliIbmnpAgMiDlvKDlm77jgIIKCuS9huWmguaenOWOhuWPsue8k+WtmOmHjOS5n+acieaXp+eahCBgMS5wbmdg44CBYDIucG5nYO+8jOS4jeiDveaKiuaXp+WbvuS4gOi1t+WIhuaekOOAguavj+S4qiBgW0ltYWdlICNOXWAg5Y+q5Y+W5b2T5YmN5pe26Ze056qX5Y+j5YaF5pyA5paw5Yy56YWN55qE5LiA5byg44CCCgojIyMg56aB5q2i6K+v5o2e5Y6G5Y+y5Zu+54mHCgrku6XkuIvooYzkuLrpu5jorqTlhbPpl63vvJoKCi0g5omr5o+P5qGM6Z2i44CB5LiL6L2955uu5b2V44CB5oiq5Zu+55uu5b2V44CCCi0g5omr5o+PIGB+Ly5jbGF1ZGUvaW1hZ2UtY2FjaGVgIOS4reacgOi/kSBOIOenkuWGheeahOaJgOacieWbvueJh+OAggotIOWboOS4uuayoeacieWMuemFjeWIsOWbvueJh++8jOWwseKAnOeMnOa1i+KAneeUqOaIt+aDs+WIhuaekOafkOW8oOacgOi/keWbvueJh+OAggoK6L+Z5LqbIGZhbGxiYWNrIOeci+S8vOaWueS+v++8jOS9huato+aYr+KAnOW9k+WJjeaIquWbviArIOS5i+WJjeaIquWbvuS4gOi1t+iiq+WIhuaekOKAneeahOS4u+imgeWOn+WboOOAggoKLS0tCgojIyDlt6XkvZzmtYHnqIsKCmBgYHRleHQK55So5oi35Y+R6YCB5raI5oGvCiAgICB8CiAgICB2ClVzZXJQcm9tcHRTdWJtaXQgSG9vawogICAgfAogICAgdgppbWFnZV9wcmVwcm9jZXNzLnB5CiAgICB8CiAgICB8LS0gUGF0aCAwOiBwcm9tcHQg5Lit5pyJIFtJbWFnZSAjTl3vvIzlj6rljLnphY3ov5nkupvnvJblj7flr7nlupTnmoTlvZPliY3lm77niYcKICAgIHwtLSBQYXRoIDE6IHByb21wdCDkuK3mnInmmI7noa7lm77niYfot6/lvoTvvIzliIbmnpDov5nkupvot6/lvoQKICAgIHwtLSBQYXRoIDI6IHByb21wdCDmnInnnIvlm77mhI/lm77ml7bvvIzor7vlj5bliarotLTmnb/kuK3nmoTlvZPliY3lm77niYcKICAgIHwtLSBQYXRoIDM6IOacgOi/keaWh+S7tuaJq+aPj++8jOm7mOiupOWFs+mXrQogICAgfAogICAgdgrosIPnlKjop4bop4nmqKHlnosKICAgIHwKICAgIHYK5rOo5YWl4oCcQ3VycmVudCB0dXJuIGltYWdlIGFuYWx5c2lz4oCdCiAgICB8CiAgICB2Cue6r+aWh+acrOaooeWei+WbnuetlApgYGAKCi0tLQoKIyMg5YeG5aSH5bel5L2cCgotIFB5dGhvbiAzLjkrCi0g5LiA5LiqIE9wZW5BSS1jb21wYXRpYmxlIOinhuinieaooeWeiyBBUEkKCm1hY09TIOivu+WPluWJqui0tOadv+WbvueJh+mcgOimge+8mgoKYGBgYmFzaApicmV3IGluc3RhbGwgcG5ncGFzdGUKYGBgCgpMaW51eCDkuozpgInkuIDvvJoKCmBgYGJhc2gKIyBXYXlsYW5kCnN1ZG8gYXB0IGluc3RhbGwgd2wtY2xpcGJvYXJkCgojIFgxMQpzdWRvIGFwdCBpbnN0YWxsIHhjbGlwCmBgYAoKV2luZG93cyDkvb/nlKggUG93ZXJTaGVsbCDor7vlj5bliarotLTmnb/lm77niYfvvIzml6DpnIDpop3lpJblronoo4XjgIIKCi0tLQoKIyMg5Yib5bu66ISa5pysCgpgYGBiYXNoCm1rZGlyIC1wIH4vLmNsYXVkZS92bG0tYnJpZGdlLy5jbGF1ZGUvaG9va3MKYGBgCgrlsIbkuIvmlrnlrozmlbTohJrmnKzkv53lrZjkuLrvvJoKCmBgYHRleHQKfi8uY2xhdWRlL3ZsbS1icmlkZ2UvLmNsYXVkZS9ob29rcy9pbWFnZV9wcmVwcm9jZXNzLnB5CmBgYAoK54S25ZCO5omn6KGM77yaCgpgYGBiYXNoCmNobW9kICt4IH4vLmNsYXVkZS92bG0tYnJpZGdlLy5jbGF1ZGUvaG9va3MvaW1hZ2VfcHJlcHJvY2Vzcy5weQpgYGAKCi0tLQoKIyMg6YWN572uIEFQSQoK57yW6L6R6ISa5pys6aG26YOo55qEIGBDT05GSUdg44CCCgpNb2RlbFNjb3BlIOekuuS+i++8mgoKYGBgcHl0aG9uCkNPTkZJRyA9IHsKICAgICJhcGlfYmFzZSI6ICJodHRwczovL2FwaS1pbmZlcmVuY2UubW9kZWxzY29wZS5jbi92MSIsCiAgICAiYXBpX2tleSI6ICLkvaDnmoQgTW9kZWxTY29wZSBBUEkgS2V5IiwKICAgICJtb2RlbCI6ICJRd2VuL1F3ZW4zLjUtMzVCLUEzQiIsCiAgICAuLi4KfQpgYGAKCk9wZW5BSSDnpLrkvovvvJoKCmBgYHB5dGhvbgpDT05GSUcgPSB7CiAgICAiYXBpX2Jhc2UiOiAiaHR0cHM6Ly9hcGkub3BlbmFpLmNvbS92MSIsCiAgICAiYXBpX2tleSI6ICJzay3kvaDnmoQgT3BlbkFJIEtleSIsCiAgICAibW9kZWwiOiAiZ3B0LTRvIiwKICAgIC4uLgp9CmBgYAoKT2xsYW1hIOekuuS+i++8mgoKYGBgcHl0aG9uCkNPTkZJRyA9IHsKICAgICJhcGlfYmFzZSI6ICJodHRwOi8vbG9jYWxob3N0OjExNDM0L3YxIiwKICAgICJhcGlfa2V5IjogIm9sbGFtYSIsCiAgICAibW9kZWwiOiAiZ2VtbWEzOjI3YiIsCiAgICAuLi4KfQpgYGAKCi0tLQoKIyMg5rOo5YaMIEhvb2sKCue8lui+kSBgfi8uY2xhdWRlL3NldHRpbmdzLmpzb25g77yM5Zyo6aG25bGCIEpTT04g5Lit5Yqg5YWl77yaCgpgYGBqc29uCnsKICAiaG9va3MiOiB7CiAgICAiVXNlclByb21wdFN1Ym1pdCI6IFsKICAgICAgewogICAgICAgICJob29rcyI6IFsKICAgICAgICAgIHsKICAgICAgICAgICAgInR5cGUiOiAiY29tbWFuZCIsCiAgICAgICAgICAgICJjb21tYW5kIjogInB5dGhvbjMgfi8uY2xhdWRlL3ZsbS1icmlkZ2UvLmNsYXVkZS9ob29rcy9pbWFnZV9wcmVwcm9jZXNzLnB5IiwKICAgICAgICAgICAgInRpbWVvdXQiOiAxODAKICAgICAgICAgIH0KICAgICAgICBdCiAgICAgIH0KICAgIF0KICB9Cn0KYGBgCgrlpoLmnpzlt7LmnIkgYGhvb2tzYCDlrZfmrrXvvIzor7flkIjlubbvvIzkuI3opoHopobnm5blt7LmnInphY3nva7jgIIKCi0tLQoKIyMg5a6M5pW06ISa5pysCgpgYGBweXRob24KIyEvdXNyL2Jpbi9lbnYgcHl0aG9uMwoiIiIKVkxNIEJyaWRnZSDigJQgQ2xhdWRlIENvZGUgVXNlclByb21wdFN1Ym1pdCBIb29rCgpQdXJwb3NlOgogIExldCB0ZXh0LW9ubHkgbW9kZWxzIHVuZGVyc3RhbmQgaW1hZ2VzIGJ5IGNvbnZlcnRpbmcgb25seSB0aGUgY3VycmVudAogIHR1cm4ncyBleHBsaWNpdCBpbWFnZXMgaW50byB0ZXh0IHRocm91Z2ggYSB2aXNpb24gbW9kZWwuCgpJbXBvcnRhbnQ6CiAgRG8gbm90IHNpbGVudGx5IGFuYWx5emUgaGlzdG9yaWNhbCBpbWFnZXMuIE11bHRpLWltYWdlIHN1cHBvcnQgaXMgYWxsb3dlZAogIG9ubHkgd2hlbiB0aGUgY3VycmVudCBwcm9tcHQgZXhwbGljaXRseSByZWZlcmVuY2VzIG11bHRpcGxlIGltYWdlcy4KIiIiCgpmcm9tIF9fZnV0dXJlX18gaW1wb3J0IGFubm90YXRpb25zCgppbXBvcnQgYmFzZTY0CmltcG9ydCBqc29uCmltcG9ydCBvcwppbXBvcnQgcGxhdGZvcm0KaW1wb3J0IHJlCmltcG9ydCBzdWJwcm9jZXNzCmltcG9ydCBzeXMKaW1wb3J0IHRlbXBmaWxlCmltcG9ydCB0aW1lCmltcG9ydCB1cmxsaWIucmVxdWVzdAoKCkNPTkZJRyA9IHsKICAgICJhcGlfYmFzZSI6ICJodHRwczovL2FwaS1pbmZlcmVuY2UubW9kZWxzY29wZS5jbi92MSIsCiAgICAiYXBpX2tleSI6ICJZT1VSX0FQSV9LRVlfSEVSRSIsCiAgICAibW9kZWwiOiAiUXdlbi9Rd2VuMy41LTM1Qi1BM0IiLAogICAgIm1heF9pbWFnZV9ieXRlcyI6IDEwICogMTAyNCAqIDEwMjQsCiAgICAibWF4X2ltYWdlc19wZXJfdHVybiI6IDgsCiAgICAiY2FjaGVfbWF0Y2hfbWF4X2FnZV9zZWNvbmRzIjogMTIwLAogICAgImVuYWJsZV9yZWNlbnRfc2NhbiI6IEZhbHNlLAogICAgInJlY2VudF9hZ2Vfc2Vjb25kcyI6IDMwLAogICAgInRpbWVvdXQiOiAxMjAsCiAgICAidmlzaW9uX3Byb21wdCI6ICgKICAgICAgICAiQW5hbHl6ZSBPTkxZIHRoZSBpbWFnZSBvciBpbWFnZXMgYXR0YWNoZWQgaW4gdGhpcyBjdXJyZW50IHJlcXVlc3QuICIKICAgICAgICAiRG8gbm90IHVzZSBvciByZWZlciB0byBhbnkgcHJldmlvdXMgaW1hZ2VzLCBwcmV2aW91cyBzY3JlZW5zaG90cywgIgogICAgICAgICJvciBwcmV2aW91cyBpbWFnZS1hbmFseXNpcyB0ZXh0LiBJZiBtdWx0aXBsZSBpbWFnZXMgYXJlIHByb3ZpZGVkLCAiCiAgICAgICAgImRlc2NyaWJlIHRoZW0gaW4gdGhlIHNhbWUgb3JkZXIgYXMgcHJvdmlkZWQsIGNsZWFybHkgbWFya2luZyBJbWFnZSAxLCAiCiAgICAgICAgIkltYWdlIDIsIGV0Yy4gRm9yIGVhY2ggaW1hZ2UsIGRlc2NyaWJlIHZpc2libGUgVUksIHRleHQvT0NSLCBlcnJvcnMsICIKICAgICAgICAibGF5b3V0LCBhbmQgaW1wb3J0YW50IGRldGFpbHMuIERvIG5vdCBpbnZlbnQgdW5zZWVuIGNvbnRlbnQuIFJlcGx5IGluICIKICAgICAgICAidGhlIGxhbmd1YWdlIG9mIHRoZSB1c2VyJ3MgcmVxdWVzdCB3aGVuIHBvc3NpYmxlLiIKICAgICksCn0KCgpTWVNURU0gPSBwbGF0Zm9ybS5zeXN0ZW0oKQpJTUFHRV9DQUNIRV9ESVIgPSBvcy5wYXRoLmV4cGFuZHVzZXIoIn4vLmNsYXVkZS9pbWFnZS1jYWNoZSIpCgpJTUdfRVhUUyA9IHsiLnBuZyIsICIuanBnIiwgIi5qcGVnIiwgIi5naWYiLCAiLndlYnAiLCAiLmJtcCIsICIudGlmZiIsICIuaGVpYyIsICIuaGVpZiJ9Ck1JTUUgPSB7CiAgICAianBnIjogImpwZWciLAogICAgImpwZWciOiAianBlZyIsCiAgICAicG5nIjogInBuZyIsCiAgICAiZ2lmIjogImdpZiIsCiAgICAid2VicCI6ICJ3ZWJwIiwKICAgICJibXAiOiAiYm1wIiwKfQoKaWYgU1lTVEVNID09ICJXaW5kb3dzIjoKICAgIFNDQU5fRElSUyA9IFsKICAgICAgICBvcy5wYXRoLmV4cGFuZHZhcnMociIlVVNFUlBST0ZJTEUlXERlc2t0b3AiKSwKICAgICAgICBvcy5wYXRoLmV4cGFuZHZhcnMociIlVVNFUlBST0ZJTEUlXERvd25sb2FkcyIpLAogICAgICAgIG9zLnBhdGguZXhwYW5kdmFycyhyIiVVU0VSUFJPRklMRSVcUGljdHVyZXNcU2NyZWVuc2hvdHMiKSwKICAgIF0KZWxzZToKICAgIFNDQU5fRElSUyA9IFsKICAgICAgICBvcy5wYXRoLmV4cGFuZHVzZXIoIn4vRGVza3RvcCIpLAogICAgICAgIG9zLnBhdGguZXhwYW5kdXNlcigifi9Eb3dubG9hZHMiKSwKICAgIF0KCgpkZWYgX29yZGVyZWRfaW1hZ2VfcmVmcyh0ZXh0OiBzdHIpIC0+IGxpc3Rbc3RyXToKICAgICIiIlJldHVybiBbSW1hZ2UgI05dIHJlZnMgaW4gcHJvbXB0IG9yZGVyLCBkZWR1cGxpY2F0ZWQuIiIiCiAgICByZWZzID0gcmUuZmluZGFsbChyIlxbSW1hZ2UgIyhcZCspXF0iLCB0ZXh0KQogICAgb3V0ID0gW10KICAgIHNlZW4gPSBzZXQoKQogICAgZm9yIHJlZiBpbiByZWZzOgogICAgICAgIGlmIHJlZiBub3QgaW4gc2VlbjoKICAgICAgICAgICAgb3V0LmFwcGVuZChyZWYpCiAgICAgICAgICAgIHNlZW4uYWRkKHJlZikKICAgIHJldHVybiBvdXQKCgpkZWYgX2ZpbmRfY2FjaGVkX2ltYWdlcyh0ZXh0OiBzdHIpIC0+IGxpc3Rbc3RyXToKICAgICIiIgogICAgUGF0aCAwOiBtYXRjaCBDbGF1ZGUgQ29kZSBbSW1hZ2UgI05dIHBsYWNlaG9sZGVycy4KCiAgICBTYWZldHkgcnVsZToKICAgICAgRm9yIGVhY2ggcmVmLCByZXR1cm4gYXQgbW9zdCBvbmUgaW1hZ2U6IHRoZSBuZXdlc3QgbWF0Y2hpbmcgZmlsZSB3aXRoaW4KICAgICAgY2FjaGVfbWF0Y2hfbWF4X2FnZV9zZWNvbmRzLiBUaGlzIHByZXZlbnRzIG9sZGVyIGNhY2hlZCBpbWFnZXMgd2l0aCB0aGUKICAgICAgc2FtZSBudW1lcmljIGZpbGVuYW1lIGZyb20gYmVpbmcgaW5jbHVkZWQuCiAgICAiIiIKICAgIHJlZnMgPSBfb3JkZXJlZF9pbWFnZV9yZWZzKHRleHQpCiAgICBpZiBub3QgcmVmcyBvciBub3Qgb3MucGF0aC5pc2RpcihJTUFHRV9DQUNIRV9ESVIpOgogICAgICAgIHJldHVybiBbXQoKICAgIG5vdyA9IHRpbWUudGltZSgpCiAgICBtYXhfYWdlID0gQ09ORklHWyJjYWNoZV9tYXRjaF9tYXhfYWdlX3NlY29uZHMiXQogICAgYnlfcmVmOiBkaWN0W3N0ciwgdHVwbGVbZmxvYXQsIHN0cl1dID0ge30KCiAgICB0cnk6CiAgICAgICAgZm9yIHJvb3QsIF9kaXJzLCBmaWxlcyBpbiBvcy53YWxrKElNQUdFX0NBQ0hFX0RJUik6CiAgICAgICAgICAgIGZvciBmaWxlbmFtZSBpbiBmaWxlczoKICAgICAgICAgICAgICAgIG5hbWUsIGV4dCA9IG9zLnBhdGguc3BsaXRleHQoZmlsZW5hbWUpCiAgICAgICAgICAgICAgICBpZiBuYW1lIG5vdCBpbiByZWZzIG9yIGV4dC5sb3dlcigpIG5vdCBpbiBJTUdfRVhUUzoKICAgICAgICAgICAgICAgICAgICBjb250aW51ZQoKICAgICAgICAgICAgICAgIHBhdGggPSBvcy5wYXRoLmpvaW4ocm9vdCwgZmlsZW5hbWUpCiAgICAgICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICAgICAgbXRpbWUgPSBvcy5wYXRoLmdldG10aW1lKHBhdGgpCiAgICAgICAgICAgICAgICBleGNlcHQgT1NFcnJvcjoKICAgICAgICAgICAgICAgICAgICBjb250aW51ZQoKICAgICAgICAgICAgICAgIGlmIG5vdyAtIG10aW1lID4gbWF4X2FnZToKICAgICAgICAgICAgICAgICAgICBjb250aW51ZQoKICAgICAgICAgICAgICAgIGlmIG5hbWUgbm90IGluIGJ5X3JlZiBvciBtdGltZSA+IGJ5X3JlZltuYW1lXVswXToKICAgICAgICAgICAgICAgICAgICBieV9yZWZbbmFtZV0gPSAobXRpbWUsIHBhdGgpCiAgICBleGNlcHQgUGVybWlzc2lvbkVycm9yOgogICAgICAgIHJldHVybiBbXQoKICAgIHJldHVybiBbYnlfcmVmW3JlZl1bMV0gZm9yIHJlZiBpbiByZWZzIGlmIHJlZiBpbiBieV9yZWZdCgoKZGVmIF9maW5kX3BhdGhzKHRleHQ6IHN0cikgLT4gbGlzdFtzdHJdOgogICAgIiIiUGF0aCAxOiBleHRyYWN0IGV4cGxpY2l0IGltYWdlIHBhdGhzIG1lbnRpb25lZCBieSB0aGUgdXNlci4iIiIKICAgIGV4dF9hbHQgPSAifCIuam9pbihyZS5lc2NhcGUoZXh0LmxzdHJpcCgiLiIpKSBmb3IgZXh0IGluIElNR19FWFRTKQogICAgcGF0dGVybnMgPSBbCiAgICAgICAgcmYiIiIoPzp+Py9bXlxzIicoKTw+XStcLig/OntleHRfYWx0fSkpIiIiLAogICAgICAgIHJmIiIiKD86W0EtWmEtel06XFxbXlxzIicoKTw+XStcLig/OntleHRfYWx0fSkpIiIiLAogICAgICAgIHJmIiIiKD86XFxcXFteXHMiJygpPD5dK1wuKD86e2V4dF9hbHR9KSkiIiIsCiAgICBdCgogICAgZm91bmQgPSBbXQogICAgc2VlbiA9IHNldCgpCiAgICBmb3IgcGF0dGVybiBpbiBwYXR0ZXJuczoKICAgICAgICBmb3IgbWF0Y2ggaW4gcmUuZmluZGFsbChwYXR0ZXJuLCB0ZXh0LCByZS5JR05PUkVDQVNFKToKICAgICAgICAgICAgcGF0aCA9IG9zLnBhdGguZXhwYW5kdXNlcihtYXRjaCkgaWYgU1lTVEVNICE9ICJXaW5kb3dzIiBlbHNlIG1hdGNoCiAgICAgICAgICAgIGlmIG9zLnBhdGguaXNmaWxlKHBhdGgpIGFuZCBwYXRoIG5vdCBpbiBzZWVuOgogICAgICAgICAgICAgICAgZm91bmQuYXBwZW5kKHBhdGgpCiAgICAgICAgICAgICAgICBzZWVuLmFkZChwYXRoKQogICAgcmV0dXJuIGZvdW5kCgoKZGVmIF9ncmFiX2NsaXBib2FyZCgpIC0+IHN0ciB8IE5vbmU6CiAgICAiIiJQYXRoIDI6IGdyYWIgb25lIGltYWdlIGZyb20gdGhlIHN5c3RlbSBjbGlwYm9hcmQuIiIiCiAgICB0bXAgPSB0ZW1wZmlsZS5OYW1lZFRlbXBvcmFyeUZpbGUoc3VmZml4PSIucG5nIiwgZGVsZXRlPUZhbHNlKQogICAgdG1wLmNsb3NlKCkKCiAgICB0cnk6CiAgICAgICAgaWYgU1lTVEVNID09ICJEYXJ3aW4iOgogICAgICAgICAgICByZXN1bHQgPSBzdWJwcm9jZXNzLnJ1bihbInBuZ3Bhc3RlIiwgdG1wLm5hbWVdLCBjYXB0dXJlX291dHB1dD1UcnVlLCB0aW1lb3V0PTEwKQogICAgICAgICAgICBpZiByZXN1bHQucmV0dXJuY29kZSA9PSAwIGFuZCBvcy5wYXRoLmdldHNpemUodG1wLm5hbWUpID4gMTAwOgogICAgICAgICAgICAgICAgcmV0dXJuIHRtcC5uYW1lCgogICAgICAgIGVsaWYgU1lTVEVNID09ICJXaW5kb3dzIjoKICAgICAgICAgICAgcHNfc2NyaXB0ID0gZicnJwogICAgICAgICAgICBBZGQtVHlwZSAtQXNzZW1ibHlOYW1lIFN5c3RlbS5XaW5kb3dzLkZvcm1zLFN5c3RlbS5EcmF3aW5nCiAgICAgICAgICAgICRpbWcgPSBbU3lzdGVtLldpbmRvd3MuRm9ybXMuQ2xpcGJvYXJkXTo6R2V0SW1hZ2UoKQogICAgICAgICAgICBpZiAoJGltZykge3sgJGltZy5TYXZlKCJ7dG1wLm5hbWV9IiwgW1N5c3RlbS5EcmF3aW5nLkltYWdpbmcuSW1hZ2VGb3JtYXRdOjpQbmcpIH19CiAgICAgICAgICAgICcnJwogICAgICAgICAgICByZXN1bHQgPSBzdWJwcm9jZXNzLnJ1bigKICAgICAgICAgICAgICAgIFsicG93ZXJzaGVsbCIsICItTm9Qcm9maWxlIiwgIi1Db21tYW5kIiwgcHNfc2NyaXB0XSwKICAgICAgICAgICAgICAgIGNhcHR1cmVfb3V0cHV0PVRydWUsCiAgICAgICAgICAgICAgICB0aW1lb3V0PTE1LAogICAgICAgICAgICApCiAgICAgICAgICAgIGlmIHJlc3VsdC5yZXR1cm5jb2RlID09IDAgYW5kIG9zLnBhdGguZ2V0c2l6ZSh0bXAubmFtZSkgPiAxMDA6CiAgICAgICAgICAgICAgICByZXR1cm4gdG1wLm5hbWUKCiAgICAgICAgZWxzZToKICAgICAgICAgICAgZm9yIGNtZCBpbiAoCiAgICAgICAgICAgICAgICBbIndsLXBhc3RlIiwgIi0tdHlwZSIsICJpbWFnZS9wbmciXSwKICAgICAgICAgICAgICAgIFsieGNsaXAiLCAiLXNlbGVjdGlvbiIsICJjbGlwYm9hcmQiLCAiLXQiLCAiaW1hZ2UvcG5nIiwgIi1vIl0sCiAgICAgICAgICAgICk6CiAgICAgICAgICAgICAgICB0cnk6CiAgICAgICAgICAgICAgICAgICAgd2l0aCBvcGVuKHRtcC5uYW1lLCAid2IiKSBhcyBmOgogICAgICAgICAgICAgICAgICAgICAgICByZXN1bHQgPSBzdWJwcm9jZXNzLnJ1bigKICAgICAgICAgICAgICAgICAgICAgICAgICAgIGNtZCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgIHN0ZG91dD1mLAogICAgICAgICAgICAgICAgICAgICAgICAgICAgc3RkZXJyPXN1YnByb2Nlc3MuREVWTlVMTCwKICAgICAgICAgICAgICAgICAgICAgICAgICAgIHRpbWVvdXQ9MTAsCiAgICAgICAgICAgICAgICAgICAgICAgICkKICAgICAgICAgICAgICAgICAgICBpZiByZXN1bHQucmV0dXJuY29kZSA9PSAwIGFuZCBvcy5wYXRoLmdldHNpemUodG1wLm5hbWUpID4gMTAwOgogICAgICAgICAgICAgICAgICAgICAgICByZXR1cm4gdG1wLm5hbWUKICAgICAgICAgICAgICAgIGV4Y2VwdCBFeGNlcHRpb246CiAgICAgICAgICAgICAgICAgICAgY29udGludWUKCiAgICBleGNlcHQgRXhjZXB0aW9uOgogICAgICAgIHBhc3MKCiAgICB0cnk6CiAgICAgICAgb3MudW5saW5rKHRtcC5uYW1lKQogICAgZXhjZXB0IE9TRXJyb3I6CiAgICAgICAgcGFzcwogICAgcmV0dXJuIE5vbmUKCgpkZWYgX3NjYW5fcmVjZW50KCkgLT4gbGlzdFtzdHJdOgogICAgIiIiCiAgICBQYXRoIDM6IG9wdGlvbmFsIHVuc2FmZSBmYWxsYmFjay4KCiAgICBEaXNhYmxlZCBieSBkZWZhdWx0IGJlY2F1c2UgaXQgY2FuIHBpY2sgdXAgdW5yZWxhdGVkIHNjcmVlbnNob3RzIGZyb20KICAgIHByZXZpb3VzIHR1cm5zLiBFbmFibGUgb25seSBpZiB5b3UgYWNjZXB0IHRoYXQgdHJhZGVvZmYuCiAgICAiIiIKICAgIG5vdyA9IHRpbWUudGltZSgpCiAgICB3aW5kb3cgPSBDT05GSUdbInJlY2VudF9hZ2Vfc2Vjb25kcyJdCiAgICBoaXRzOiBsaXN0W3R1cGxlW2Zsb2F0LCBzdHJdXSA9IFtdCgogICAgZm9yIGRpcmVjdG9yeSBpbiBTQ0FOX0RJUlM6CiAgICAgICAgaWYgbm90IG9zLnBhdGguaXNkaXIoZGlyZWN0b3J5KToKICAgICAgICAgICAgY29udGludWUKICAgICAgICB0cnk6CiAgICAgICAgICAgIGZvciBmaWxlbmFtZSBpbiBvcy5saXN0ZGlyKGRpcmVjdG9yeSk6CiAgICAgICAgICAgICAgICBwYXRoID0gb3MucGF0aC5qb2luKGRpcmVjdG9yeSwgZmlsZW5hbWUpCiAgICAgICAgICAgICAgICBpZiBub3Qgb3MucGF0aC5pc2ZpbGUocGF0aCk6CiAgICAgICAgICAgICAgICAgICAgY29udGludWUKICAgICAgICAgICAgICAgIGlmIG9zLnBhdGguc3BsaXRleHQoZmlsZW5hbWUpWzFdLmxvd2VyKCkgbm90IGluIElNR19FWFRTOgogICAgICAgICAgICAgICAgICAgIGNvbnRpbnVlCiAgICAgICAgICAgICAgICBhZ2UgPSBub3cgLSBvcy5wYXRoLmdldG10aW1lKHBhdGgpCiAgICAgICAgICAgICAgICBpZiAwIDwgYWdlIDwgd2luZG93OgogICAgICAgICAgICAgICAgICAgIGhpdHMuYXBwZW5kKChhZ2UsIHBhdGgpKQogICAgICAgIGV4Y2VwdCBQZXJtaXNzaW9uRXJyb3I6CiAgICAgICAgICAgIGNvbnRpbnVlCgogICAgcmV0dXJuIFtwYXRoIGZvciBfYWdlLCBwYXRoIGluIHNvcnRlZChoaXRzKV0KCgpDTElQQk9BUkRfSU5URU5UX0tFWVdPUkRTID0gWwogICAgIui/meS4qiIsCiAgICAi5oiq5Zu+IiwKICAgICLmiqXplJkiLAogICAgIui/meW8oCIsCiAgICAi5Zu+54mHIiwKICAgICLnnIvnnIsiLAogICAgIueci+S4gOS4iyIsCiAgICAi6L+Z5piv5LuA5LmIIiwKICAgICLluK7miJHnnIvnnIsiLAogICAgIuWbvuS4iiIsCiAgICAi5Zu+5LitIiwKICAgICJzY3JlZW5zaG90IiwKICAgICJjbGlwYm9hcmQiLAogICAgImltYWdlIiwKICAgICJwaWN0dXJlIiwKICAgICLliarotLTmnb8iLAogICAgIui0tOWbviIsCl0KCgpkZWYgX3Nob3VsZF90cnlfY2xpcGJvYXJkKHByb21wdDogc3RyKSAtPiBib29sOgogICAgbG93ZXIgPSBwcm9tcHQubG93ZXIoKQogICAgcmV0dXJuIGFueShrZXl3b3JkLmxvd2VyKCkgaW4gbG93ZXIgZm9yIGtleXdvcmQgaW4gQ0xJUEJPQVJEX0lOVEVOVF9LRVlXT1JEUykKCgpkZWYgX2xpbWl0X2ltYWdlcyhwYXRoczogbGlzdFtzdHJdKSAtPiBsaXN0W3N0cl06CiAgICBsaW1pdCA9IENPTkZJR1sibWF4X2ltYWdlc19wZXJfdHVybiJdCiAgICBpZiBsZW4ocGF0aHMpID4gbGltaXQ6CiAgICAgICAgcHJpbnQoCiAgICAgICAgICAgIGYiW3ZsbS1icmlkZ2VdIGZvdW5kIHtsZW4ocGF0aHMpfSBpbWFnZXM7IGxpbWl0aW5nIHRvIHtsaW1pdH0iLAogICAgICAgICAgICBmaWxlPXN5cy5zdGRlcnIsCiAgICAgICAgKQogICAgcmV0dXJuIHBhdGhzWzpsaW1pdF0KCgpkZWYgX2VuY29kZV9pbWFnZShwYXRoOiBzdHIpIC0+IHN0ciB8IE5vbmU6CiAgICB0cnk6CiAgICAgICAgc2l6ZSA9IG9zLnBhdGguZ2V0c2l6ZShwYXRoKQogICAgZXhjZXB0IE9TRXJyb3I6CiAgICAgICAgcmV0dXJuIE5vbmUKCiAgICBpZiBzaXplID4gQ09ORklHWyJtYXhfaW1hZ2VfYnl0ZXMiXToKICAgICAgICBwcmludChmIlt2bG0tYnJpZGdlXSBTS0lQIHtwYXRofSAoe3NpemUgLyAxMDI0IC8gMTAyNDouMWZ9IE1CKSIsIGZpbGU9c3lzLnN0ZGVycikKICAgICAgICByZXR1cm4gTm9uZQoKICAgIHdpdGggb3BlbihwYXRoLCAicmIiKSBhcyBmOgogICAgICAgIGRhdGEgPSBmLnJlYWQoKQoKICAgIGV4dCA9IG9zLnBhdGguc3BsaXRleHQocGF0aClbMV0ubG93ZXIoKS5sc3RyaXAoIi4iKQogICAgbWltZSA9IE1JTUUuZ2V0KGV4dCwgInBuZyIpCiAgICByZXR1cm4gZiJkYXRhOmltYWdlL3ttaW1lfTtiYXNlNjQse2Jhc2U2NC5iNjRlbmNvZGUoZGF0YSkuZGVjb2RlKCl9IgoKCmRlZiBfY2FsbF9hcGkoaW1hZ2VfcGF0aHM6IGxpc3Rbc3RyXSkgLT4gc3RyIHwgTm9uZToKICAgIGNvbnRlbnQgPSBbXQoKICAgIGZvciBwYXRoIGluIGltYWdlX3BhdGhzOgogICAgICAgIHVyaSA9IF9lbmNvZGVfaW1hZ2UocGF0aCkKICAgICAgICBpZiB1cmk6CiAgICAgICAgICAgIGNvbnRlbnQuYXBwZW5kKHsidHlwZSI6ICJpbWFnZV91cmwiLCAiaW1hZ2VfdXJsIjogeyJ1cmwiOiB1cml9fSkKCiAgICBpZiBub3QgY29udGVudDoKICAgICAgICByZXR1cm4gTm9uZQoKICAgIGNvbnRlbnQuYXBwZW5kKHsidHlwZSI6ICJ0ZXh0IiwgInRleHQiOiBDT05GSUdbInZpc2lvbl9wcm9tcHQiXX0pCgogICAgcGF5bG9hZCA9IHsKICAgICAgICAibW9kZWwiOiBDT05GSUdbIm1vZGVsIl0sCiAgICAgICAgIm1lc3NhZ2VzIjogW3sicm9sZSI6ICJ1c2VyIiwgImNvbnRlbnQiOiBjb250ZW50fV0sCiAgICAgICAgIm1heF90b2tlbnMiOiAyMDAwLAogICAgICAgICJ0ZW1wZXJhdHVyZSI6IDAuMSwKICAgIH0KCiAgICB1cmwgPSBmIntDT05GSUdbJ2FwaV9iYXNlJ10ucnN0cmlwKCcvJyl9L2NoYXQvY29tcGxldGlvbnMiCiAgICByZXF1ZXN0ID0gdXJsbGliLnJlcXVlc3QuUmVxdWVzdCgKICAgICAgICB1cmwsCiAgICAgICAgZGF0YT1qc29uLmR1bXBzKHBheWxvYWQpLmVuY29kZSgidXRmLTgiKSwKICAgICAgICBoZWFkZXJzPXsKICAgICAgICAgICAgIkNvbnRlbnQtVHlwZSI6ICJhcHBsaWNhdGlvbi9qc29uIiwKICAgICAgICAgICAgIkF1dGhvcml6YXRpb24iOiBmIkJlYXJlciB7Q09ORklHWydhcGlfa2V5J119IiwKICAgICAgICB9LAogICAgKQoKICAgIHRyeToKICAgICAgICB3aXRoIHVybGxpYi5yZXF1ZXN0LnVybG9wZW4ocmVxdWVzdCwgdGltZW91dD1DT05GSUdbInRpbWVvdXQiXSkgYXMgcmVzcG9uc2U6CiAgICAgICAgICAgIGRhdGEgPSBqc29uLmxvYWRzKHJlc3BvbnNlLnJlYWQoKS5kZWNvZGUoInV0Zi04IikpCiAgICAgICAgICAgIHJldHVybiBkYXRhWyJjaG9pY2VzIl1bMF1bIm1lc3NhZ2UiXVsiY29udGVudCJdCiAgICBleGNlcHQgRXhjZXB0aW9uIGFzIGV4YzoKICAgICAgICBwcmludChmIlt2bG0tYnJpZGdlXSBBUEkgZXJyb3I6IHtleGN9IiwgZmlsZT1zeXMuc3RkZXJyKQogICAgICAgIHJldHVybiBOb25lCgoKZGVmIF9kaXNjb3Zlcl9pbWFnZXMocHJvbXB0OiBzdHIpIC0+IGxpc3Rbc3RyXToKICAgIGltYWdlcyA9IF9maW5kX2NhY2hlZF9pbWFnZXMocHJvbXB0KQogICAgaWYgaW1hZ2VzOgogICAgICAgIHByaW50KGYiW3ZsbS1icmlkZ2VdIGN1cnJlbnQgcHJvbXB0IGltYWdlLWNhY2hlIG1hdGNoOiB7aW1hZ2VzfSIsIGZpbGU9c3lzLnN0ZGVycikKICAgICAgICByZXR1cm4gX2xpbWl0X2ltYWdlcyhpbWFnZXMpCgogICAgaW1hZ2VzID0gX2ZpbmRfcGF0aHMocHJvbXB0KQogICAgaWYgaW1hZ2VzOgogICAgICAgIHByaW50KGYiW3ZsbS1icmlkZ2VdIGV4cGxpY2l0IHBhdGggbWF0Y2g6IHtpbWFnZXN9IiwgZmlsZT1zeXMuc3RkZXJyKQogICAgICAgIHJldHVybiBfbGltaXRfaW1hZ2VzKGltYWdlcykKCiAgICBpZiBfc2hvdWxkX3RyeV9jbGlwYm9hcmQocHJvbXB0KToKICAgICAgICBwcmludCgiW3ZsbS1icmlkZ2VdIHRyeWluZyBjbGlwYm9hcmQgLi4uIiwgZmlsZT1zeXMuc3RkZXJyKQogICAgICAgIGNsaXAgPSBfZ3JhYl9jbGlwYm9hcmQoKQogICAgICAgIGlmIGNsaXA6CiAgICAgICAgICAgIHJldHVybiBbY2xpcF0KCiAgICBpZiBDT05GSUcuZ2V0KCJlbmFibGVfcmVjZW50X3NjYW4iLCBGYWxzZSk6CiAgICAgICAgcHJpbnQoIlt2bG0tYnJpZGdlXSBzY2FubmluZyByZWNlbnQgZmlsZXM7IHRoaXMgbWF5IGluY2x1ZGUgdW5yZWxhdGVkIGltYWdlcyAuLi4iLCBmaWxlPXN5cy5zdGRlcnIpCiAgICAgICAgcmV0dXJuIF9saW1pdF9pbWFnZXMoX3NjYW5fcmVjZW50KCkpCgogICAgcmV0dXJuIFtdCgoKZGVmIG1haW4oKSAtPiBOb25lOgogICAgcHJvbXB0ID0gc3lzLnN0ZGluLnJlYWQoKS5zdHJpcCgpCiAgICBwcmludChmIlt2bG0tYnJpZGdlXSBwbGF0Zm9ybToge1NZU1RFTX0iLCBmaWxlPXN5cy5zdGRlcnIpCgogICAgaW1hZ2VzID0gX2Rpc2NvdmVyX2ltYWdlcyhwcm9tcHQpCiAgICBpZiBub3QgaW1hZ2VzOgogICAgICAgIHByaW50KHByb21wdCkKICAgICAgICByZXR1cm4KCiAgICBwcmludChmIlt2bG0tYnJpZGdlXSBhbmFseXppbmcge2xlbihpbWFnZXMpfSBjdXJyZW50LXR1cm4gaW1hZ2UocykgLi4uIiwgZmlsZT1zeXMuc3RkZXJyKQogICAgZGVzY3JpcHRpb24gPSBfY2FsbF9hcGkoaW1hZ2VzKQoKICAgIGlmIG5vdCBkZXNjcmlwdGlvbjoKICAgICAgICBwcmludChwcm9tcHQpCiAgICAgICAgcmV0dXJuCgogICAgcHJpbnQoZiJbdmxtLWJyaWRnZV0gZG9uZSAoe2xlbihkZXNjcmlwdGlvbil9IGNoYXJzKSIsIGZpbGU9c3lzLnN0ZGVycikKICAgIHByaW50KAogICAgICAgIGYie3Byb21wdH1cblxuIgogICAgICAgIGYiW0N1cnJlbnQgdHVybiBpbWFnZSBhbmFseXNpcyDigJQgdXNlIHRoaXMgZm9yIHRoZSBjdXJyZW50IHVzZXIgcmVxdWVzdCBvbmx5LiAiCiAgICAgICAgZiJEbyBub3QgdHJlYXQgcHJldmlvdXMgaW1hZ2UtYW5hbHlzaXMgYmxvY2tzIGFzIGN1cnJlbnQgaW1hZ2VzLl1cbiIKICAgICAgICBmIntkZXNjcmlwdGlvbn1cbiIKICAgICAgICBmIltFbmQgb2YgY3VycmVudCB0dXJuIGltYWdlIGFuYWx5c2lzXSIKICAgICkKCiAgICBmb3IgcGF0aCBpbiBpbWFnZXM6CiAgICAgICAgaWYgcGF0aC5zdGFydHN3aXRoKHRlbXBmaWxlLmdldHRlbXBkaXIoKSk6CiAgICAgICAgICAgIHRyeToKICAgICAgICAgICAgICAgIG9zLnVubGluayhwYXRoKQogICAgICAgICAgICBleGNlcHQgT1NFcnJvcjoKICAgICAgICAgICAgICAgIHBhc3MKCgppZiBfX25hbWVfXyA9PSAiX19tYWluX18iOgogICAgbWFpbigpCmBgYAoKLS0tCgojIyDnu5kgRGVlcFNlZWsg55qE5pS56YCg6KaB5rGCCgrlpoLmnpzmiorov5nku73mlofmoaPkuqTnu5kgRGVlcFNlZWvvvIzorqnlroPmlLnlloTlt7LmnInohJrmnKzvvIzor7forqnlroPkuKXmoLzmu6HotrPkuIvpnaLlh6DngrnvvJoKCjEuIOS/neeVmeWkmuWbvuiDveWKm++8muW9k+WJjSBwcm9tcHQg5piO56Gu5pyJ5aSa5byg5Zu+5pe277yM5bqU5oyJIHByb21wdCDkuK3lh7rnjrDpobrluo/liIbmnpDlpJrlvKDlm77jgIIKMi4g56aB5q2i5Y6G5Y+y5Liy5Zu+77ya5LiN6IO95Zug5Li6IGB+Ly5jbGF1ZGUvaW1hZ2UtY2FjaGVgIOS4reWtmOWcqOaXp+aWh+S7tu+8jOWwseaKiuaXp+WbvuS5n+WKoOWFpeW9k+WJjei9ruOAggozLiBgW0ltYWdlICNOXWAg5Yy56YWN6KeE5YiZ77ya5q+P5Liq57yW5Y+35pyA5aSa5Yy56YWN5LiA5byg5Zu+77yM5Y+W5pe26Ze056qX5Y+j5YaF5pyA5paw55qE5LiA5byg44CCCjQuIOacgOi/keaWh+S7tuaJq+aPj+m7mOiupOWFs+mXre+8mmBlbmFibGVfcmVjZW50X3NjYW5gIOW/hemhu+m7mOiupOS4uiBgRmFsc2Vg44CCCjUuIOWJqui0tOadv+WPquS9nOS4uuacieeci+WbvuaEj+WbvuaXtueahCBmYWxsYmFja++8jOW5tuS4lOmAmuW4uOWPqui/lOWbnuS4gOW8oOW9k+WJjeWJqui0tOadv+WbvueJh+OAggo2LiDms6jlhaXmlofmnKzlv4XpobvmoIfmmI7mmK/igJxDdXJyZW50IHR1cm4gaW1hZ2UgYW5hbHlzaXPigJ3vvIzmj5DphpLkuLvmqKHlnovkuI3opoHmiorkuYvliY3ova7mrKHnmoTlm77niYfliIbmnpDlvZPmiJDlvZPliY3lm77niYfjgIIKNy4g5pel5b+X6KaB5omT5Y2w5pys6L2u5a6e6ZmF5YiG5p6Q5LqG5Yeg5byg5Zu+44CB6Lev5b6E5p2l6Ieq5ZOq6YeM77yM5pa55L6/5o6S5p+l44CCCgotLS0KCiMjIOW4uOingemXrumimAoKIyMjIOS4uuS7gOS5iOS5i+WJjeS8muaKiuWOhuWPsuWbvueJh+S4gOi1t+WIhuaekO+8nwoK5Zug5Li65pen5pa55qGI5Lya5omr5o+PIGB+Ly5jbGF1ZGUvaW1hZ2UtY2FjaGVgIOWSjOacgOi/keaWh+S7tuebruW9leOAgkNsYXVkZSBDb2RlIOeahOWbvueJh+e8k+WtmOWPr+iDveS/neeVmeWkmui9ruS8muivnemHjOeahOWbvueJh++8jOaWh+S7tuWQjee8luWPt+S5n+WPr+iDvemHjeWkjeOAguWPquaMieaWh+S7tuWQjeaIluacgOi/keS/ruaUueaXtumXtOaJq+aPj++8jOS8muaKiuS5i+WJjeeahOaIquWbvuivr+iupOS4uuW9k+WJjei9ruWbvueJh+OAggoKIyMjIOW9k+WJjeWQjOaXtuWPkemAgeWkmuW8oOWbvuaAjuS5iOWKnu+8nwoK5Y+v5Lul44CC5Y+q6KaB5b2T5YmNIHByb21wdCDkuK3mnInlpJrkuKogYFtJbWFnZSAjTl1g77yM6ISa5pys5Lya5oyJ5Ye6546w6aG65bqP5YiG5p6Q5aSa5byg5Zu+44CC5YWz6ZSu5piv4oCc5aSa5Zu+5b+F6aG75p2l6Ieq5b2T5YmNIHByb21wdCDnmoTmmL7lvI/lvJXnlKjigJ3vvIzogIzkuI3mmK/mnaXoh6rnm67lvZXmiavmj4/jgIIKCiMjIyDkuLrku4DkuYjpu5jorqTlhbPpl63mnIDov5Hmlofku7bmiavmj4/vvJ8KCuWboOS4uuWug+S4jeWPr+mdoOOAguacgOi/keaWh+S7tuS4jeetieS6juW9k+WJjeeUqOaIt+aPkOS6pOeahOWbvueJh+OAguaIquWbvuW3peWFt+OAgeS4i+i9veWZqOOAgea1j+iniOWZqOe8k+WtmOOAgUNsYXVkZSBpbWFnZS1jYWNoZSDpg73lj6/og73lnKjnn63ml7bpl7TlhoXkuqfnlJ/lm77niYfmlofku7bjgIIKCiMjIyDlpoLmnpzmi5blhaXlm77niYfml6Dms5Xor4bliKvmgI7kuYjlip7vvJ8KCuWFiOeciyBzdGRlcnIg5pel5b+X5Lit5piv5ZCm5Ye6546w77yaCgpgYGB0ZXh0Clt2bG0tYnJpZGdlXSBjdXJyZW50IHByb21wdCBpbWFnZS1jYWNoZSBtYXRjaDogWy4uLl0KYGBgCgrlpoLmnpzmsqHmnInvvIzor7TmmI4gcHJvbXB0IOS4reWPr+iDveayoeaciSBgW0ltYWdlICNOXWDvvIzmiJYgQ2xhdWRlIENvZGUg55qE57yT5a2Y57uT5p6E5LiO6ISa5pys5YGH6K6+5LiN5LiA6Ie044CC5q2k5pe25Y+v5Lul5Li05pe25L2/55So5piO56Gu6Lev5b6E77yaCgpgYGB0ZXh0CuW4ruaIkeeci+S4gOS4iyAvVXNlcnMvcGF1bC9EZXNrdG9wL3NjcmVlbnNob3QucG5nCmBgYAoKIyMjIOWmguaenOaIkeWwseaYr+aDs+WQr+eUqOacgOi/keaIquWbvuiHquWKqOivhuWIq+WRou+8nwoK5Y+v5Lul5oqK77yaCgpgYGBweXRob24KImVuYWJsZV9yZWNlbnRfc2NhbiI6IEZhbHNlLApgYGAKCuaUueaIkO+8mgoKYGBgcHl0aG9uCiJlbmFibGVfcmVjZW50X3NjYW4iOiBUcnVlLApgYGAKCuS9huimgeaOpeWPl+Wug+WPr+iDveivr+aNnuWOhuWPsuWbvuaIluaXoOWFs+WbvuOAguabtOeos+eahOWBmuazleS7jeeEtuaYr+aLluWFpeWbvueJh+OAgeeymOi0tOWbvueJh++8jOaIlue7meWHuuaYjuehruaWh+S7tui3r+W+hOOAggo=</script>
+    <div class="download-group">
+        <a href="vlm-bridge-guide.md" class="download-btn" download="VLM-Bridge-使用指南.md">
+            <div class="download-left">
+                <div class="download-icon">📥</div>
+                <div class="download-label">
+                    <strong>VLM-Bridge-使用指南.md</strong>
+                    <span>下载后发给 Claude Code，说「帮我配置」，自动搞定</span>
+                </div>
+            </div>
+            <span class="download-arrow">&rarr;</span>
+        </a>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="tip">
+        <div class="tip-title">📖 也可以手动安装</div>
+        <p>下面是从零开始的手把手教程，每一步都有截图和代码可复制。全程大约 15 分钟。</p>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <section class="step">
+        <div class="step-header">
+            <div class="step-number">0</div>
+            <h2>开始之前：你需要准备什么</h2>
+        </div>
+        <div class="tip">
+            <div class="tip-title">准备工作清单</div>
+            <p>1. 电脑上装了 Python（命令行输入 <code>python --version</code> 检查）</p>
+            <p>2. 一个视觉模型的 API Key（推荐 ModelScope，免费额度；也支持 OpenAI、SiliconFlow）</p>
+            <p>3. 大概 15 分钟时间</p>
+        </div>
+        <p class="note">Windows 用户不需要额外装任何东西。</p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="step">
+        <div class="step-header">
+            <div class="step-number">1</div>
+            <h2>第一步：创建文件夹</h2>
+        </div>
+        <p>打开终端（Windows 按 Win+R 输入 powershell，Mac 打开 Terminal），复制下面这行命令回车：</p>
+        <div class="code-block">
+            <span class="lang-tag">bash</span>
+            <button class="copy-btn" onclick="copyCode(this)">复制</button>
+            <code>mkdir -p ~/.claude/vlm-bridge/.claude/hooks</code>
+        </div>
+        <p class="note">没有任何输出就是成功了。</p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="step">
+        <div class="step-header">
+            <div class="step-number">2</div>
+            <h2>第二步：保存脚本文件</h2>
+        </div>
+        <p>用记事本新建文件，把以下脚本<strong>全选复制</strong>进去：</p>
+
+        <details class="expand-box">
+            <summary>
+                <span class="chevron">&#9654;</span>
+                点击展开完整脚本（约 200 行）
+            </summary>
+            <div class="expand-box-content">
+                <div class="code-block" style="max-height:500px;overflow-y:auto;">
+                    <span class="lang-tag">python</span>
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<code>#!/usr/bin/env python3
+"""
+VLM Bridge — Claude Code UserPromptSubmit Hook
+"""
+import base64, json, os, platform, re, subprocess, sys, tempfile, time, urllib.request
+
+# ============================================================
+# ★ 改这里：填你的 API 信息
+# ============================================================
+CONFIG = {
+    "api_base": "https://api-inference.modelscope.cn/v1",
+    "api_key": "YOUR_API_KEY_HERE",
+    "model": "Qwen/Qwen3.5-35B-A3B",
+    "max_image_bytes": 10 * 1024 * 1024,
+    "max_images_per_turn": 8,
+    "cache_match_max_age_seconds": 120,
+    "enable_recent_scan": False,
+    "recent_age_seconds": 30,
+    "timeout": 120,
+    "vision_prompt": (
+        "Analyze ONLY the image or images attached in this current request. "
+        "Do not use or refer to any previous images. "
+        "Describe visible UI, text/OCR, errors, layout, and important details. "
+        "Reply in the language of the user request when possible."
+    ),
+}
+
+SYSTEM = platform.system()
+IMAGE_CACHE_DIR = os.path.expanduser("~/.claude/image-cache")
+IMG_EXTS = {".png", ".jpg", ".jpeg", ".gif", ".webp", ".bmp", ".tiff", ".heic", ".heif"}
+MIME = {"jpg":"jpeg","jpeg":"jpeg","png":"png","gif":"gif","webp":"webp","bmp":"bmp"}
+
+if SYSTEM == "Windows":
+    SCAN_DIRS = [
+        os.path.expandvars(r"%USERPROFILE%\Desktop"),
+        os.path.expandvars(r"%USERPROFILE%\Downloads"),
+        os.path.expandvars(r"%USERPROFILE%\Pictures\Screenshots"),
+    ]
+else:
+    SCAN_DIRS = [
+        os.path.expanduser("~/Desktop"),
+        os.path.expanduser("~/Downloads"),
+    ]
+
+def _ordered_image_refs(text):
+    refs = re.findall(r"\[Image #(\d+)\]", text)
+    out = []; seen = set()
+    for ref in refs:
+        if ref not in seen: out.append(ref); seen.add(ref)
+    return out
+
+def _find_cached_images(text):
+    refs = _ordered_image_refs(text)
+    if not refs or not os.path.isdir(IMAGE_CACHE_DIR): return []
+    now = time.time(); max_age = CONFIG["cache_match_max_age_seconds"]
+    by_ref = {}
+    try:
+        for root, _dirs, files in os.walk(IMAGE_CACHE_DIR):
+            for f in files:
+                name, ext = os.path.splitext(f)
+                if name not in refs or ext.lower() not in IMG_EXTS: continue
+                path = os.path.join(root, f)
+                try: mtime = os.path.getmtime(path)
+                except OSError: continue
+                if now - mtime > max_age: continue
+                if name not in by_ref or mtime > by_ref[name][0]: by_ref[name] = (mtime, path)
+    except PermissionError: return []
+    return [by_ref[ref][1] for ref in refs if ref in by_ref]
+
+def _grab_clipboard():
+    tmp = tempfile.NamedTemporaryFile(suffix=".png", delete=False); tmp.close()
+    try:
+        if SYSTEM == "Windows":
+            ps = f'''Add-Type -AssemblyName System.Windows.Forms,System.Drawing
+$img = [System.Windows.Forms.Clipboard]::GetImage()
+if ($img) {{ $img.Save("{tmp.name}", [System.Drawing.Imaging.ImageFormat]::Png) }}'''
+            r = subprocess.run(["powershell","-NoProfile","-Command",ps], capture_output=True, timeout=15)
+            if r.returncode == 0 and os.path.getsize(tmp.name) > 100: return tmp.name
+        elif SYSTEM == "Darwin":
+            r = subprocess.run(["pngpaste", tmp.name], capture_output=True, timeout=10)
+            if r.returncode == 0 and os.path.getsize(tmp.name) > 100: return tmp.name
+        else:
+            for cmd in (["wl-paste","--type","image/png"], ["xclip","-selection","clipboard","-t","image/png","-o"]):
+                try:
+                    with open(tmp.name, "wb") as f:
+                        r = subprocess.run(cmd, stdout=f, stderr=subprocess.DEVNULL, timeout=10)
+                    if r.returncode == 0 and os.path.getsize(tmp.name) > 100: return tmp.name
+                except: continue
+    except: pass
+    try: os.unlink(tmp.name)
+    except OSError: pass
+    return None
+
+CLIPBOARD_KEYWORDS = ["这个","截图","报错","这张","图片","看看","看一下","screenshot","clipboard","image","剪贴板"]
+
+def _should_try_clipboard(prompt):
+    return any(kw in prompt.lower() for kw in CLIPBOARD_KEYWORDS)
+
+def _limit_images(paths):
+    limit = CONFIG["max_images_per_turn"]
+    if len(paths) > limit: print(f"[vlm-bridge] limiting to {limit}", file=sys.stderr)
+    return paths[:limit]
+
+def _encode_image(path):
+    try: size = os.path.getsize(path)
+    except OSError: return None
+    if size > CONFIG["max_image_bytes"]: return None
+    with open(path, "rb") as f: data = f.read()
+    ext = os.path.splitext(path)[1].lower().lstrip(".")
+    mime = MIME.get(ext, "png")
+    return f"data:image/{mime};base64,{base64.b64encode(data).decode()}"
+
+def _call_api(image_paths):
+    content = []
+    for p in image_paths:
+        uri = _encode_image(p)
+        if uri: content.append({"type":"image_url","image_url":{"url":uri}})
+    if not content: return None
+    content.append({"type":"text","text":CONFIG["vision_prompt"]})
+    payload = {"model":CONFIG["model"],"messages":[{"role":"user","content":content}],"max_tokens":2000,"temperature":0.1}
+    url = f"{CONFIG['api_base'].rstrip('/')}/chat/completions"
+    req = urllib.request.Request(url, data=json.dumps(payload).encode("utf-8"),
+        headers={"Content-Type":"application/json","Authorization":f"Bearer {CONFIG['api_key']}"})
+    try:
+        with urllib.request.urlopen(req, timeout=CONFIG["timeout"]) as resp:
+            return json.loads(resp.read().decode())["choices"][0]["message"]["content"]
+    except Exception as exc:
+        print(f"[vlm-bridge] API error: {exc}", file=sys.stderr)
+        return None
+
+def _discover_images(prompt):
+    images = _find_cached_images(prompt)
+    if images:
+        print(f"[vlm-bridge] cache match: {images}", file=sys.stderr)
+        return _limit_images(images)
+    ext_alt = "|".join(re.escape(e.lstrip(".")) for e in IMG_EXTS)
+    patterns = [
+        rf"""(?:~?/[^\s"'()<>]+\.(?:{ext_alt}))""",
+        rf"""(?:[A-Za-z]:\\[^\s"'()<>]+\.(?:{ext_alt}))""",
+        rf"""(?:\\\\[^\s"'()<>]+\.(?:{ext_alt}))""",
+    ]
+    found = []; seen = set()
+    for pat in patterns:
+        for m in re.findall(pat, prompt, re.IGNORECASE):
+            path = os.path.expanduser(m) if SYSTEM != "Windows" else m
+            if os.path.isfile(path) and path not in seen: found.append(path); seen.add(path)
+    if found: return _limit_images(found)
+    if _should_try_clipboard(prompt):
+        clip = _grab_clipboard()
+        if clip: return [clip]
+    if CONFIG.get("enable_recent_scan"):
+        now = time.time(); window = CONFIG["recent_age_seconds"]
+        hits = []
+        for d in SCAN_DIRS:
+            if not os.path.isdir(d): continue
+            try:
+                for fn in os.listdir(d):
+                    p = os.path.join(d, fn)
+                    if os.path.isfile(p) and os.path.splitext(fn)[1].lower() in IMG_EXTS:
+                        age = now - os.path.getmtime(p)
+                        if 0 < age < window: hits.append((age, p))
+            except PermissionError: continue
+        return [p for _, p in sorted(hits)]
+    return []
+
+def main():
+    prompt = sys.stdin.read().strip()
+    images = _discover_images(prompt)
+    if not images: print(prompt); return
+    print(f"[vlm-bridge] analyzing {len(images)} image(s) ...", file=sys.stderr)
+    desc = _call_api(images)
+    if not desc: print(prompt); return
+    print(f"{prompt}\n\n"
+          f"[Current turn image analysis — use this for the current user request only. "
+          f"Do not treat previous image-analysis blocks as current images.]\n"
+          f"{desc}\n"
+          f"[End of current turn image analysis]")
+    for p in images:
+        if p.startswith(tempfile.gettempdir()):
+            try: os.unlink(p)
+            except OSError: pass
+
+if __name__ == "__main__":
+    main()</code>
+                </div>
+            </div>
+        </details>
+
+        <p style="margin-top:16px;">保存到这个路径（把「你的用户名」换成你电脑的用户名）：</p>
+        <div class="code-block">
+            <span class="lang-tag">路径</span>
+            <button class="copy-btn" onclick="copyCode(this)">复制</button>
+            <code>C:\Users\你的用户名\.claude\vlm-bridge\.claude\hooks\image_preprocess.py</code>
+        </div>
+
+        <div class="warning">
+            <div class="tip-title">保存后别忘了</div>
+            <p>打开脚本，找到顶部的 <code>YOUR_API_KEY_HERE</code>，替换成你自己的 API Key。</p>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="step">
+        <div class="step-header">
+            <div class="step-number">3</div>
+            <h2>第三步：获取 API Key（三选一）</h2>
+        </div>
+
+        <h3 style="font-size:1rem;margin-top:16px;">方案 A：ModelScope（推荐，有免费额度）</h3>
+        <p>1. 打开 <a class="inline-link" href="https://modelscope.cn" target="_blank">modelscope.cn</a>，注册并登录</p>
+        <p>2. 进入「设置 → 账号绑定」→ <strong>绑定阿里云账号</strong>（很多人漏掉这步！）</p>
+        <p>3. 进入「设置 → API Key」→ 创建新 Key，复制 <code>ms-</code> 开头的字符串</p>
+        <p>4. 把脚本里的 <code>YOUR_API_KEY_HERE</code> 替换为这个 Key</p>
+
+        <h3 style="font-size:1rem;margin-top:16px;">方案 B：SiliconFlow（国内直达，也有免费额度）</h3>
+        <p>注册 <a class="inline-link" href="https://siliconflow.cn" target="_blank">siliconflow.cn</a>，获取 Key 后改脚本里两处：</p>
+        <div class="code-block">
+            <span class="lang-tag">python</span>
+            <button class="copy-btn" onclick="copyCode(this)">复制</button>
+            <code>"api_base": "https://api.siliconflow.cn/v1",
+"api_key": "你的SiliconFlow Key",
+"model": "Qwen/Qwen2-VL-72B-Instruct",</code>
+        </div>
+
+        <h3 style="font-size:1rem;margin-top:16px;">方案 C：OpenAI</h3>
+        <div class="code-block">
+            <span class="lang-tag">python</span>
+            <button class="copy-btn" onclick="copyCode(this)">复制</button>
+            <code>"api_base": "https://api.openai.com/v1",
+"api_key": "sk-你的OpenAI Key",
+"model": "gpt-4o",</code>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="step">
+        <div class="step-header">
+            <div class="step-number">4</div>
+            <h2>第四步：注册 Hook（让 Claude Code 知道你装了这个脚本）</h2>
+        </div>
+
+        <div class="tip">
+            <div class="tip-title">这一步是干什么的？</div>
+            <p>你刚才保存的脚本，Claude Code 并不知道它的存在。Hook 就是告诉 Claude Code：「每次发消息之前，先跑一下这个脚本」。注册 Hook 就是填一个配置文件。</p>
+        </div>
+
+        <h3 style="font-size:1rem;margin-top:20px;">怎么操作：</h3>
+
+        <p><strong>情况一：你从来没改过 settings.json（大多数人是这个情况）</strong></p>
+        <p>直接把下面的内容全选复制，粘贴到下面这个文件里（文件不存在就新建）：</p>
+        <div class="code-block">
+            <span class="lang-tag">文件路径</span>
+            <code>C:\Users\你的用户名\.claude\settings.json</code>
+        </div>
+
+        <p class="note">怎么打开这个文件：打开记事本 → 文件 → 打开 → 在地址栏粘贴上面这个路径 → 回车。如果提示文件不存在，就点「新建」。</p>
+
+        <details class="expand-box">
+            <summary>
+                <span class="chevron">&#9654;</span>
+                Windows 用户：复制下面这整段
+            </summary>
+            <div class="expand-box-content">
+                <div class="code-block" style="margin-top:16px;">
+                    <span class="lang-tag">json</span>
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<code>{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python ~/.claude/vlm-bridge/.claude/hooks/image_preprocess.py",
+            "timeout": 180
+          }
+        ]
+      }
+    ]
+  }
+}</code>
+                </div>
+                <p class="note" style="margin-top:8px;">注意：命令里写的是 <code>python</code>，不是 <code>python3</code>。</p>
+            </div>
+        </details>
+
+        <details class="expand-box">
+            <summary>
+                <span class="chevron">&#9654;</span>
+                Mac / Linux 用户：复制下面这整段
+            </summary>
+            <div class="expand-box-content">
+                <div class="code-block" style="margin-top:16px;">
+                    <span class="lang-tag">json</span>
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+<code>{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/vlm-bridge/.claude/hooks/image_preprocess.py",
+            "timeout": 180
+          }
+        ]
+      }
+    ]
+  }
+}</code>
+                </div>
+                <p style="margin-top:12px;">还要给脚本加执行权限，终端里运行：</p>
+                <div class="code-block">
+                    <span class="lang-tag">bash</span>
+                    <button class="copy-btn" onclick="copyCode(this)">复制</button>
+                    <code>chmod +x ~/.claude/vlm-bridge/.claude/hooks/image_preprocess.py</code>
+                </div>
+            </div>
+        </details>
+
+        <p style="margin-top:20px;"><strong>情况二：你的 settings.json 里已经有其他配置了</strong></p>
+        <p>那就只加 <code>"hooks"</code> 这一块，加到已有内容的大括号里面。不会操作的话，直接把文件内容复制发给 Claude Code，说「帮我把 hook 配置加进去」，它会帮你改。</p>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="step">
+        <div class="step-header">
+            <div class="step-number">5</div>
+            <h2>第五步：重启并测试</h2>
+        </div>
+        <p><strong>必须重启 Claude Code</strong>——关掉终端重开，Hook 才会生效。</p>
+        <p>测试：截一张图拖进 Claude Code → 输入「帮我看看这张图」→ <strong>立刻发送</strong>（不要等超过 2 分钟）。</p>
+        <p>如果 AI 回复中出现了 <code>[Current turn image analysis ...]</code> 开头的文字描述，就说明成功了。</p>
+
+        <div class="img-placeholder">
+            <div><strong>📷 待配图</strong>测试成功截图：拖入图片后 AI 返回了图片描述</div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="step">
+        <div class="step-header">
+            <div class="step-number">6</div>
+            <h2>常见问题排查</h2>
+        </div>
+        <div class="qa-list">
+            <div class="qa-item">
+                <div class="qa-q">拖入图片后没任何反应？</div>
+                <div class="qa-a">检查：① 重启 Claude Code 了吗？② settings.json 路径写对了吗？</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-q">回复里有 <code>[Image #1]</code> 但没有分析文字？</div>
+                <div class="qa-a">拖入图片后等太久才发送。缓存只有 120 秒，拖入后立即发送。</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-q">终端报 <code>python3: command not found</code>？</div>
+                <div class="qa-a">Windows 用户 settings.json 里要用 <code>python</code>，不要用 <code>python3</code>。</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-q">终端报 <code>401 Unauthorized</code>？</div>
+                <div class="qa-a">Key 写错，或者 ModelScope 没绑阿里云账号。去 modelscope.cn 绑定。</div>
+            </div>
+            <div class="qa-item">
+                <div class="qa-q">想换别的视觉模型？</div>
+                <div class="qa-a">改脚本 CONFIG 里的 <code>api_base</code>、<code>api_key</code>、<code>model</code> 即可。</div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider"></div>
+
+    <section class="step">
+        <div class="step-header">
+            <div class="step-number">💡</div>
+            <h2>原理（一句话）</h2>
+        </div>
+        <p>拖入图片 → Claude Code 缓存图片生成 <code>[Image #N]</code> → Hook 把图片发给视觉模型分析 → 文字描述塞进消息 → 纯文本模型基于描述回答。</p>
+        <p><strong>只分析当前这轮</strong>的图片，不会把旧截图混进来。</p>
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <span class="footer-brand">土豆熬孬土豆</span>
+    本站由 <a href="index.html">Elwyn</a> 维护
+</footer>
+
+<script>
+(function() {
+    var bar = document.getElementById('progressBar');
+    window.addEventListener('scroll', function() {
+        var h = document.body.scrollHeight - window.innerHeight;
+        bar.style.width = h > 0 ? Math.min(100, (window.scrollY / h) * 100) + '%' : '0%';
+    }, { passive: true });
+})();
+function copyCode(btn) {
+    var code = btn.parentElement.querySelector('code');
+    navigator.clipboard.writeText(code.innerText).then(function() {
+        btn.textContent = '已复制'; btn.classList.add('copied');
+        setTimeout(function() { btn.textContent = '复制'; btn.classList.remove('copied'); }, 2000);
+    });
+}
+</script>
 
 </body>
 </html>
