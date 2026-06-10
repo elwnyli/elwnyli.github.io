@@ -53,7 +53,7 @@
     </div>
 
     <div class="download-group">
-        <a href="https://cdn.jsdelivr.net/gh/elwnyli/elwnyli.github.io@main/vlm-bridge-guide.md" class="download-btn" download="VLM-Bridge-使用指南.md">
+        <a href="javascript:void(0)" onclick="downloadGuide()" class="download-btn" style="cursor:pointer">
             <div class="download-left">
                 <div class="download-icon">📥</div>
                 <div class="download-label">
@@ -64,6 +64,24 @@
             <span class="download-arrow">&rarr;</span>
         </a>
     </div>
+    <script>
+    async function downloadGuide() {
+        const url = 'https://cdn.jsdelivr.net/gh/elwnyli/elwnyli.github.io@main/vlm-bridge-guide.md';
+        try {
+            const resp = await fetch(url);
+            const blob = await resp.blob();
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = 'VLM-Bridge-使用指南.md';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+        } catch(e) {
+            alert('下载失败，请检查网络后重试');
+        }
+    }
+    </script>
 
     <div class="section-divider"></div>
 
