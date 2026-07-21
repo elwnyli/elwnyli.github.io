@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light" data-font="medium">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>岐黄 - 中医术语翻译助手</title>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<style>
+  :root {
+    --bg: #faf7f2; --surface: #fff; --text: #2c2416; --text-secondary: #8b7355;
+    --accent: #8b5e3c; --accent-hover: #7a5230; --accent-light: #f5ede3;
+    --bubble-user: #f0e8db; --bubble-ai: #fff; --border: #e5dbcc; --border-light: #e8e0d5;
+    --shadow: 0 1px 3px rgba(0,0,0,.06); --shadow-lg: 0 8px 30px rgba(0,0,0,.12);
+    --overlay: rgba(0,0,0,.35); --modal-bg: #fff; --input-bg: #faf7f2;
+    --code-bg: #f0f0f0; --code-color: #333; --danger: #c0392b; --success: #27ae60;
+    --radius: 16px; --radius-sm: 10px; --transition: .2s ease;
+    --fs-base: 15px; --fs-sm: 13px; --fs-xs: 12px; --fs-lg: 18px;
+    --fs-xl: 20px; --fs-2xl: 22px; --fs-h2: 18px; --fs-h3: 15px;
+    --lh-body: 1.75; --lh-tight: 1.6;
+  }
+  [data-theme="dark"] {
+    --bg: #1a1a24; --surface: #24243a; --text: #e0d8cc; --text-secondary: #a09880;
+    --accent: #d4956b; --accent-hover: #e0a87d; --accent-light: #2c2822;
+    --bubble-user: #2c2a24; --bubble-ai: #24243a; --border: #3a3850; --border-light: #333148;
+    --shadow: 0 1px 3px rgba(0,0,0,.3); --shadow-lg: 0 8px 30px rgba(0,0,0,.4);
+    --overlay: rgba(0,0,0,.6); --modal-bg: #24243a; --input-bg: #1e1e2c;
+    --code-bg: #1e1e2e; --code-color: #d0d0d0; --danger: #e74c3c; --success: #2ecc71;
+  }
+  [data-font="small"] { --fs-base: 13px; --fs-sm: 11px; --fs-xs: 10px; --fs-lg: 16px; --fs-xl: 18px; --fs-2xl: 20px; --fs-h2: 16px; --fs-h3: 14px; }
+  [data-font="large"] { --fs-base: 17px; --fs-sm: 15px; --fs-xs: 14px; --fs-lg: 20px; --fs-xl: 22px; --fs-2xl: 24px; --fs-h2: 20px; --fs-h3: 17px; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  html, body { height:100%; overflow:hidden; }
+  body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Noto Sans SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); display: flex; flex-direction: column; font-size: var(--fs-base); transition: background var(--transition), color var(--transition); }
+  .header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 20px; text-align: center; flex-shrink: 0; box-shadow: var(--shadow); position: relative; transition: background var(--transition), border var(--transition); }
+  .header h1 { font-size: var(--fs-xl); font-weight: 700; color: var(--accent); letter-spacing: .02em; }
+  .header .subtitle { font-size: var(--fs-sm); color: var(--text-secondary); margin-top: 2px; }
+  .header-actions { position: absolute; right: 20px; top: 50%; transform: translateY(-50%); display: flex; gap: 8px; }
+  .icon-btn { width: 36px; height: 36px; border-radius: 50%; background: transparent; border: 1px solid var(--border); cursor: pointer; font-size: 18px; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); transition: all var(--transition); }
+  .icon-btn:hover { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+  .icon-btn.active { background: var(--accent-light); color: var(--accent); border-color: var(--accent); }
+  .theme-toggle .icon-sun, .theme-toggle .icon-moon { transition: all var(--transition); }
+  [data-theme="light"] .icon-moon { display: none; }
+  [data-theme="dark"] .icon-sun { display: none; }
+  .chat-area { flex: 1; overflow-y: auto; padding: 20px; scroll-behavior: smooth; }
+  .messages { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 16px; }
+  .welcome { text-align: center; padding: 48px 24px 32px; }
+  .welcome .avatar { width: 64px; height: 64px; border-radius: 50%; background: var(--accent-light); color: var(--accent); display: flex; align-items: center; justify-content: center; font-size: 28px; margin: 0 auto 16px; font-weight: 700; }
+  .welcome h2 { font-size: var(--fs-2xl); margin-bottom: 8px; }
+  .welcome p { color: var(--text-secondary); font-size: var(--fs-base); line-height: var(--lh-body); }
+  .msg { display: flex; gap: 10px; max-width: 85%; }
+  .msg.user { align-self: flex-end; flex-direction: row-reverse; }
+  .msg.assistant { align-self: flex-start; }
+  .msg .avatar-icon { width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 700; }
+  .msg.user .avatar-icon { background: var(--accent); color: #fff; }
+  .msg.assistant .avatar-icon { background: var(--accent-light); color: var(--accent); }
+  .msg .bubble { padding: 12px 16px; border-radius: var(--radius); font-size: var(--fs-base); line-height: var(--lh-body); overflow-x: auto; }
+  .msg.user .bubble { background: var(--bubble-user); border-bottom-right-radius: 4px; }
+  .msg.assistant .bubble { background: var(--bubble-ai); border: 1px solid var(--border); border-bottom-left-radius: 4px; box-shadow: var(--shadow); }
+  .msg.assistant .bubble h2 { font-size: var(--fs-h2); color: var(--accent); margin: 16px 0 8px; }
+  .msg.assistant .bubble h2:first-child { margin-top: 0; }
+  .msg.assistant .bubble h3 { font-size: var(--fs-h3); margin: 16px 0 6px; color: var(--accent); }
+  .msg.assistant .bubble table { width: 100%; border-collapse: collapse; margin: 8px 0 12px; font-size: var(--fs-base); }
+  .msg.assistant .bubble th, .msg.assistant .bubble td { padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border); }
+  .msg.assistant .bubble th { color: var(--text-secondary); font-weight: 600; }
+  .msg.assistant .bubble ul, .msg.assistant .bubble ol { margin: 4px 0 8px 20px; }
+  .msg.assistant .bubble li { margin: 2px 0; }
+  .msg.assistant .bubble p { margin: 6px 0; }
+  .msg.assistant .bubble strong { color: var(--accent); }
+  .msg.assistant .bubble hr { border: none; border-top: 1px solid var(--border); margin: 16px 0; }
+  .msg.assistant .bubble em { color: var(--text-secondary); }
+  .typing-dots { display: flex; gap: 4px; padding: 4px 0; }
+  .typing-dots span { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: bounce 1.2s infinite; }
+  .typing-dots span:nth-child(2) { animation-delay: .2s; }
+  .typing-dots span:nth-child(3) { animation-delay: .4s; }
+  @keyframes bounce { 0%, 60%, 100% { opacity: .3; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-4px); } }
+  .input-area { background: var(--surface); border-top: 1px solid var(--border); padding: 14px 20px; flex-shrink: 0; transition: background var(--transition), border var(--transition); }
+  .input-row { max-width: 780px; margin: 0 auto; display: flex; gap: 10px; }
+  .input-row input { flex: 1; padding: 12px 16px; border: 1.5px solid var(--border); border-radius: 24px; font-size: var(--fs-base); font-family: inherit; background: var(--input-bg); color: var(--text); outline: none; transition: border-color var(--transition), background var(--transition), color var(--transition); }
+  .input-row input::placeholder { color: var(--text-secondary); opacity: .6; }
+  .input-row input:focus { border-color: var(--accent); }
+  .input-row button.send-btn { width: 44px; height: 44px; border-radius: 50%; background: var(--accent); color: #fff; border: none; cursor: pointer; font-size: 18px; flex-shrink: 0; transition: background var(--transition); display: flex; align-items: center; justify-content: center; }
+  .input-row button.send-btn:hover { background: var(--accent-hover); }
+  .input-row button.send-btn:disabled { opacity: .5; cursor: not-allowed; }
+  .quick-row { max-width: 780px; margin: 8px auto 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .quick-row button { padding: 3px 14px; background: transparent; color: var(--accent); border: 1px solid var(--border); border-radius: 20px; font-size: var(--fs-sm); font-family: inherit; cursor: pointer; transition: all var(--transition); }
+  .quick-row button:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: var(--overlay); z-index: 100; align-items: center; justify-content: center; }
+  .modal-overlay.show { display: flex; }
+  .modal { position: relative; background: var(--modal-bg); border-radius: var(--radius); padding: 32px; max-width: 480px; width: 92%; max-height: 85vh; overflow-y: auto; box-shadow: var(--shadow-lg); animation: fadeIn .2s ease; transition: background var(--transition); }
+  @keyframes fadeIn { from { opacity:0; transform:translateY(-12px); } to { opacity:1; transform:translateY(0); } }
+  .modal h3 { font-size: var(--fs-xl); color: var(--accent); margin-bottom: 4px; padding-right: 28px; }
+  .modal-close-x { position: absolute; top: 18px; right: 18px; width: 32px; height: 32px; border-radius: 50%; background: transparent; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; color: var(--text-secondary); transition: all var(--transition); }
+  .modal-close-x:hover { background: var(--input-bg); color: var(--text); }
+  .modal .modal-desc { font-size: var(--fs-sm); color: var(--text-secondary); margin-bottom: 24px; line-height: var(--lh-tight); }
+  .modal .modal-desc a { color: var(--accent); }
+  .settings-section { margin-bottom: 24px; padding-bottom: 20px; border-bottom: 1px solid var(--border-light); }
+  .settings-section:last-of-type { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+  .settings-section h4 { font-size: var(--fs-base); font-weight: 700; color: var(--text); margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+  .settings-section h4 .section-icon { font-size: 18px; }
+  .setting-row { display: flex; align-items: center; justify-content: space-between; padding: 8px 0; }
+  .setting-row .setting-label { font-size: var(--fs-base); color: var(--text); }
+  .setting-row .setting-hint { font-size: var(--fs-xs); color: var(--text-secondary); }
+  .toggle-switch { position: relative; width: 48px; height: 26px; flex-shrink: 0; }
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+  .toggle-slider { position: absolute; inset: 0; background: var(--border); border-radius: 26px; cursor: pointer; transition: all var(--transition); }
+  .toggle-slider::before { content: ""; position: absolute; left: 3px; top: 3px; width: 20px; height: 20px; border-radius: 50%; background: #fff; transition: all var(--transition); box-shadow: 0 1px 3px rgba(0,0,0,.2); }
+  .toggle-switch input:checked + .toggle-slider { background: var(--accent); }
+  .toggle-switch input:checked + .toggle-slider::before { transform: translateX(22px); }
+  .font-size-group, .lang-group { display: flex; gap: 6px; }
+  .font-size-btn, .lang-btn { padding: 6px 14px; border: 1.5px solid var(--border); border-radius: 8px; background: transparent; color: var(--text); font-size: var(--fs-base); font-family: inherit; cursor: pointer; transition: all var(--transition); }
+  .font-size-btn:hover, .lang-btn:hover { border-color: var(--accent); color: var(--accent); }
+  .font-size-btn.selected, .lang-btn.selected { background: var(--accent); color: #fff; border-color: var(--accent); }
+  .font-size-btn.small { font-size: 11px; } .font-size-btn.large { font-size: 19px; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label { display: block; font-size: var(--fs-sm); font-weight: 600; color: var(--text-secondary); margin-bottom: 4px; }
+  .form-group input { width: 100%; padding: 9px 12px; border: 1.5px solid var(--border); border-radius: var(--radius-sm); font-size: var(--fs-base); font-family: inherit; background: var(--input-bg); color: var(--text); outline: none; transition: all var(--transition); }
+  .form-group input:focus { border-color: var(--accent); }
+  .form-group .hint { font-size: var(--fs-xs); color: var(--text-secondary); margin-top: 3px; }
+  .modal-actions { display: flex; gap: 10px; margin-top: 20px; }
+  .modal-actions button { flex: 1; padding: 10px 0; border-radius: var(--radius-sm); font-size: var(--fs-base); font-family: inherit; cursor: pointer; border: none; font-weight: 600; transition: all var(--transition); }
+  .btn-primary { background: var(--accent); color: #fff; } .btn-primary:hover { background: var(--accent-hover); }
+  .btn-ghost { background: transparent; color: var(--text-secondary); border: 1px solid var(--border) !important; } .btn-ghost:hover { background: var(--input-bg); }
+  .btn-danger-text { background: transparent; color: var(--danger); border: none; font-size: var(--fs-sm); cursor: pointer; padding: 4px 0; font-family: inherit; }
+  .btn-danger-text:hover { text-decoration: underline; }
+  .text-center { text-align: center; } .mt-12 { margin-top: 12px; }
+  @media (max-width: 600px) { .msg { max-width: 92%; } .chat-area { padding: 12px; } .input-area { padding: 10px 12px; } .modal { padding: 24px; max-width: 100%; } .header-actions { right: 10px; gap: 4px; } }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1 data-i18n="appTitle">岐黄</h1>
+  <div class="subtitle" data-i18n="appSubtitle">中医术语翻译助手 · 查询术语获取三版权威翻译对照</div>
+  <div class="header-actions">
+    <button class="icon-btn theme-toggle" onclick="toggleTheme()" title="切换明暗主题">
+      <span class="icon-sun"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg></span>
+      <span class="icon-moon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></span>
+    </button>
+    <button class="icon-btn" id="settingsBtn" onclick="openSettings()" title="设置"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg></button>
+  </div>
+</div>
+
+<div class="chat-area" id="chatArea">
+  <div class="messages" id="messages">
+    <div class="welcome">
+      <div class="avatar">岐</div>
+      <h2 data-i18n="welcomeTitle">你好，我是岐黄</h2>
+      <p data-i18n="welcomeText">我可以帮你查询中医术语的翻译与解释。<br>支持 WHO、世中联、标准方案 三版对照。<br>直接输入术语名称或别名即可，比如"阴阳"、"肝火"。</p>
+    </div>
+  </div>
+</div>
+
+<div class="input-area">
+  <div class="input-row">
+    <input id="queryInput" type="text" data-i18n-placeholder="inputPlaceholder" placeholder="输入中医术语或提问..." autocomplete="off">
+    <button class="send-btn" id="sendBtn" onclick="sendMessage()" title="发送"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg></button>
+  </div>
+  <div class="quick-row">
+    <button onclick="sendQuick('阴阳')">阴阳</button><button onclick="sendQuick('肝火')">肝火</button><button onclick="sendQuick('辨证论治')">辨证论治</button>
+    <button onclick="sendQuick('清热解毒')">清热解毒</button><button onclick="sendQuick('经络')">经络</button><button onclick="sendQuick('扶正祛邪')">扶正祛邪</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="settingsOverlay">
+  <div class="modal">
+    <h3 data-i18n="settingsTitle">设置</h3>
+    <button class="modal-close-x" onclick="closeSettings()" title="关闭"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="modal-desc" data-i18n="settingsDesc">自定义外观、语言和 API 配置。所有设置仅保存在你的浏览器中。</div>
+    <div class="settings-section">
+      <h4><span class="section-icon">🎨</span> <span data-i18n="sectionAppearance">外观</span></h4>
+      <div class="setting-row">
+        <div><div class="setting-label" data-i18n="themeLabel">深色模式</div><div class="setting-hint" data-i18n="themeHint">切换明暗主题</div></div>
+        <label class="toggle-switch"><input type="checkbox" id="darkModeToggle" onchange="onDarkModeToggle(this.checked)"><span class="toggle-slider"></span></label>
+      </div>
+      <div class="setting-row" style="align-items:flex-start;">
+        <div><div class="setting-label" data-i18n="fontSizeLabel">字体大小</div><div class="setting-hint" data-i18n="fontSizeHint">调整聊天文字大小</div></div>
+        <div class="font-size-group">
+          <button class="font-size-btn small" onclick="setFontSize('small')" data-i18n="fontSmall">小</button>
+          <button class="font-size-btn medium" onclick="setFontSize('medium')" data-i18n="fontMedium">中</button>
+          <button class="font-size-btn large" onclick="setFontSize('large')" data-i18n="fontLarge">大</button>
+        </div>
+      </div>
+    </div>
+    <div class="settings-section">
+      <h4><span class="section-icon">🌐</span> <span data-i18n="sectionLanguage">语言</span></h4>
+      <div class="setting-row">
+        <div><div class="setting-label" data-i18n="langLabel">界面语言</div><div class="setting-hint" data-i18n="langHint">切换界面显示语言</div></div>
+        <div class="lang-group">
+          <button class="lang-btn zh" onclick="setLanguage('zh')">中文</button>
+          <button class="lang-btn en" onclick="setLanguage('en')">English</button>
+        </div>
+      </div>
+    </div>
+    <div class="settings-section">
+      <h4><span class="section-icon">🔑</span> <span data-i18n="sectionAPI">API 配置</span></h4>
+      <div class="form-group">
+        <label for="apiKeyInput" data-i18n="apiKeyLabel">API Key</label>
+        <input id="apiKeyInput" type="password" placeholder="sk-..." autocomplete="off">
+        <div class="hint" data-i18n="apiKeyHint">你的密钥仅保存在浏览器本地，不会上传到任何服务器</div>
+      </div>
+      <div class="form-group">
+        <label for="baseUrlInput" data-i18n="baseUrlLabel">接口地址 (Base URL)</label>
+        <input id="baseUrlInput" type="text" placeholder="https://api.deepseek.com">
+        <div class="hint" data-i18n="baseUrlHint">兼容 OpenAI 接口格式的地址均可</div>
+      </div>
+      <div class="form-group">
+        <label for="modelInput" data-i18n="modelLabel">模型名称</label>
+        <input id="modelInput" type="text" placeholder="deepseek-chat">
+        <div class="hint" data-i18n="modelHint">如 deepseek-chat、gpt-4o、qwen-plus 等</div>
+      </div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-primary" onclick="saveSettings()" data-i18n="saveBtn">保存设置</button>
+      <button class="btn-ghost" id="settingsCancelBtn" onclick="closeSettings()" data-i18n="cancelBtn">取消</button>
+    </div>
+    <div class="text-center mt-12"><button class="btn-danger-text" onclick="clearSettings()" data-i18n="clearDataBtn">清除所有本地数据</button></div>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// 术语数据库（内嵌，替代 terms.json）
+// ═══════════════════════════════════════════
+const TERMS = [{"chinese":"辨证论治","pinyin":"biàn zhèng lùn zhì","category":"治法治则","aliases":["辨证施治","辨证"],"versions":{"WHO":"pattern identification and treatment","世中联":"syndrome differentiation and treatment","标准方案":"treatment based on syndrome differentiation"}},{"chinese":"阴阳","pinyin":"yīn yáng","category":"基础理论","aliases":[],"versions":{"WHO":"yin and yang","世中联":"yin and yang","标准方案":"yin-yang"}},{"chinese":"气血两虚","pinyin":"qì xuè liǎng xū","category":"病机","aliases":["气血双亏","气血不足"],"versions":{"WHO":"dual deficiency of qi and blood","世中联":"deficiency of both qi and blood","标准方案":"qi and blood deficiency"}},{"chinese":"肝火上炎","pinyin":"gān huǒ shàng yán","category":"病机","aliases":["肝火","肝火上冲"],"versions":{"WHO":"flaring-up of liver fire","世中联":"upward flaming of liver fire","标准方案":"liver fire flaming upward"}},{"chinese":"清热解毒","pinyin":"qīng rè jiě dú","category":"治法治则","aliases":["清热","解毒"],"versions":{"WHO":"clearing heat and removing toxin","世中联":"clearing heat and detoxifying","标准方案":"heat-clearing and detoxifying"}},{"chinese":"经络","pinyin":"jīng luò","category":"基础理论","aliases":["经脉"],"versions":{"WHO":"meridians and collaterals","世中联":"channels and collaterals","标准方案":"meridian and collateral"}},{"chinese":"四诊合参","pinyin":"sì zhěn hé cān","category":"诊断","aliases":["四诊"],"versions":{"WHO":"comprehensive analysis of the four examinations","世中联":"synthesis of the four diagnostic methods","标准方案":"four-diagnostic comprehensive assessment"}},{"chinese":"扶正祛邪","pinyin":"fú zhèng qū xié","category":"治法治则","aliases":["扶正","祛邪"],"versions":{"WHO":"reinforcing healthy qi and eliminating pathogenic factors","世中联":"strengthening vital qi and dispelling pathogens","标准方案":"supporting rightness and dispelling evil"}},{"chinese":"肾虚腰痛","pinyin":"shèn xū yāo tòng","category":"病症","aliases":["肾虚腰疼"],"versions":{"WHO":"kidney deficiency lumbago","世中联":"lumbago due to kidney deficiency","标准方案":"kidney-deficiency low back pain"}},{"chinese":"针灸","pinyin":"zhēn jiǔ","category":"疗法","aliases":["针刺","针法"],"versions":{"WHO":"acupuncture and moxibustion","世中联":"acupuncture and moxibustion","标准方案":"acupuncture-moxibustion"}},{"chinese":"湿热蕴结","pinyin":"shī rè yùn jié","category":"病机","aliases":["湿热","湿热内蕴"],"versions":{"WHO":"accumulation of damp-heat","世中联":"dampness-heat amassment","标准方案":"damp-heat brewing internally"}},{"chinese":"望闻问切","pinyin":"wàng wén wèn qiè","category":"诊断","aliases":["四诊法"],"versions":{"WHO":"inspection, auscultation and olfaction, inquiry, and palpation","世中联":"observation, listening and smelling, inquiry, and pulse-taking","标准方案":"inspection, listening/smelling, inquiry, and palpation"}}];
+
+// ═══════════════════════════════════════════
+// 术语检索（JS 重写版，替代 search.py）
+// ═══════════════════════════════════════════
+function searchTerms(query) {
+  const q = query.trim(); if (!q) return [];
+  const index = {};
+  TERMS.forEach(t => {
+    [t.chinese, ...(t.aliases||[])].forEach(n => { if (!index[n]) index[n] = []; index[n].push(t); });
+  });
+  // 1. 精确匹配
+  if (index[q]) return index[q];
+  // 2. 子串匹配
+  let results = [];
+  const seen = new Set();
+  Object.keys(index).forEach(name => {
+    if (q.includes ? q.includes(name) : name.includes(q)) { /* 实际匹配逻辑 */ }
+    if (name.includes(q)) index[name].forEach(t => { if (!seen.has(t.chinese)) { results.push(t); seen.add(t.chinese); } });
+  });
+  if (results.length) return results;
+  // 3. 超串匹配
+  TERMS.forEach(t => {
+    [t.chinese, ...(t.aliases||[])].forEach(name => {
+      if (q.includes(name) && !seen.has(t.chinese)) { results.push(t); seen.add(t.chinese); }
+    });
+  });
+  return results;
+}
+
+// ═══════════════════════════════════════════
+// System Prompt（替代 llm.py 的 CHAT_SYSTEM_PROMPT）
+// ═══════════════════════════════════════════
+const SYSTEM_PROMPT = `你是一个专业的中医术语翻译助手，名叫"岐黄"，知识渊博且耐心友善。
+
+## 你的能力
+
+1. **术语查询**：当用户查询某个中医术语时，你需要做三件事：
+   - 严格根据术语库数据给出三版翻译（WHO/世中联/标准方案），不得修改
+   - 用通俗易懂的中文解释术语含义
+   - 用符合国际医学传播习惯的英文解释
+
+2. **自由对话**：用户可能跟你闲聊、问中医相关问题、或者对之前的回答进行追问。请自然友好地回应。
+
+3. **上下文理解**：用户说"它"、"这个"、"上面那个"等代词时，结合对话历史理解指的是哪个术语。
+
+## 术语查询时的输出格式
+
+当术语库检索到匹配结果时，按以下格式输出：
+
+## {中文术语}
+
+### 三版翻译对比
+
+| 版本 | 英文翻译 |
+|------|---------|
+| WHO版 | xxx |
+| 世中联版 | xxx |
+| 标准方案版 | xxx |
+
+### 中文解释
+xxx
+
+### English Explanation
+xxx
+
+### 适用场景
+- **临床诊疗**：xxx
+- **学术论文**：xxx
+- **科普教育**：xxx
+
+### 例句
+- **中文**：xxx
+- **英文**：xxx
+
+## 规则
+
+- 三版翻译必须**严格来自术语库数据**，不得修改任何单词；缺失的标注"（该版本未收录）"
+- 如果术语库匹配到多个结果，列出它们并询问用户想查看哪个
+- 如果术语库没有匹配结果（terms 为空），用你的知识回答，但要说明"术语库中暂未收录该词条"
+- 保持自然对话的语气，不要太死板
+- 英文解释要符合国际医学传播习惯，避免生硬直译
+- 适用场景要具体，不能泛泛而谈`;
+</script>
+
+<!-- ═══════════════════════════════════════════
+     i18n + Settings + Chat Logic
+     ═══════════════════════════════════════════ -->
+<script>
+const I18N = {
+  zh: { appTitle:"岐黄", appSubtitle:"中医术语翻译助手 · 查询术语获取三版权威翻译对照", welcomeTitle:"你好，我是岐黄", welcomeText:"我可以帮你查询中医术语的翻译与解释。<br>支持 WHO、世中联、标准方案 三版对照。<br>直接输入术语名称或别名即可，比如"阴阳"、"肝火"。", welcomeReady:"API 已就绪！<br>输入中医术语开始查询吧 👇", inputPlaceholder:"输入中医术语或提问...", settingsTitle:"设置", settingsDesc:"自定义外观、语言和 API 配置。所有设置仅保存在你的浏览器中。", sectionAppearance:"外观", sectionLanguage:"语言", sectionAPI:"API 配置", themeLabel:"深色模式", themeHint:"切换明暗主题", fontSizeLabel:"字体大小", fontSizeHint:"调整聊天文字大小", fontSmall:"小", fontMedium:"中", fontLarge:"大", langLabel:"界面语言", langHint:"切换界面显示语言", apiKeyLabel:"API Key", apiKeyHint:"你的密钥仅保存在浏览器本地，不会上传到任何服务器", baseUrlLabel:"接口地址 (Base URL)", baseUrlHint:"兼容 OpenAI 接口格式的地址均可", modelLabel:"模型名称", modelHint:"如 deepseek-chat、gpt-4o、qwen-plus 等", saveBtn:"保存设置", cancelBtn:"取消", skipBtn:"稍后设置", clearDataBtn:"清除所有本地数据", noApiKey:"请先设置 API Key（点击右上角齿轮图标）", confirmClear:"确定要清除所有本地数据吗？", needApiKey:"请先设置 API Key（点击右上角齿轮图标 ⚙）", apiError:"请确认 API 信息正确后再试。", fillApiKey:"请填写 API Key", newUserTitle:"欢迎使用岐黄", newUserDesc:'首次使用需要配置你的大语言模型 API。<br><br>支持 <b>DeepSeek</b>、<b>OpenAI</b>、<b>通义千问</b> 等任何兼容 OpenAI 接口的服务。<br>👉 <a href="https://platform.deepseek.com/api_keys" target="_blank">获取 DeepSeek API Key</a>（新用户送 500 万 token）', apiConfiguredTitle:"设置", apiConfiguredDesc:"自定义外观、语言和 API 配置。" },
+  en: { appTitle:"Qi Huang", appSubtitle:"TCM Terminology Translator · Three-authority translation comparison", welcomeTitle:"Hello, I'm Qi Huang", welcomeText:"I can help you look up translations and explanations of TCM terms.<br>Supports WHO, WFCMS, and Standard Scheme comparisons.<br>Just type a term or its alias, e.g. \"yin yang\", \"liver fire\".", welcomeReady:"API is ready!<br>Enter a TCM term to start 👇", inputPlaceholder:"Enter a TCM term or ask a question...", settingsTitle:"Settings", settingsDesc:"Customize appearance, language, and API config.", sectionAppearance:"Appearance", sectionLanguage:"Language", sectionAPI:"API Config", themeLabel:"Dark Mode", themeHint:"Toggle light/dark theme", fontSizeLabel:"Font Size", fontSizeHint:"Adjust chat text size", fontSmall:"S", fontMedium:"M", fontLarge:"L", langLabel:"Interface Language", langHint:"Switch UI display language", apiKeyLabel:"API Key", apiKeyHint:"Your key is saved only in your browser", baseUrlLabel:"Base URL", baseUrlHint:"Any OpenAI-compatible API endpoint", modelLabel:"Model Name", modelHint:"e.g. deepseek-chat, gpt-4o, qwen-plus", saveBtn:"Save", cancelBtn:"Cancel", skipBtn:"Skip for now", clearDataBtn:"Clear All Local Data", noApiKey:"Please set your API Key first (click the gear icon ⚙)", confirmClear:"Are you sure you want to clear all local data?", needApiKey:"Please set your API Key first", apiError:"Please verify your API info and try again.", fillApiKey:"Please enter your API Key", newUserTitle:"Welcome to Qi Huang", newUserDesc:'First-time setup: configure your LLM API.<br><br>Supports <b>DeepSeek</b>, <b>OpenAI</b>, <b>Qwen</b>, and any OpenAI-compatible API.<br>👉 <a href="https://platform.deepseek.com/api_keys" target="_blank">Get a DeepSeek API Key</a>', apiConfiguredTitle:"Settings", apiConfiguredDesc:"Customize appearance, language, and API config." }
+};
+
+function t(key) { const lang = getLanguage(); return I18N[lang]?.[key] || I18N.zh[key] || key; }
+function applyI18n() {
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.innerHTML = t(el.getAttribute('data-i18n')); });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = t(el.getAttribute('data-i18n-placeholder')); });
+  document.documentElement.lang = getLanguage() === 'en' ? 'en' : 'zh-CN';
+}
+
+// ── Settings ──
+const SK = 'qihuang_settings';
+function loadAll() { try { const r = localStorage.getItem(SK); return r ? JSON.parse(r) : {}; } catch(e) { return {}; } }
+function saveAll(obj) { const c = loadAll(); Object.assign(c, obj); localStorage.setItem(SK, JSON.stringify(c)); }
+function getTheme() { return loadAll().theme || 'light'; }
+function getFontSize() { return loadAll().fontSize || 'medium'; }
+function getLanguage() { return loadAll().lang || 'zh'; }
+function getApi() { const s = loadAll(); return { api_key: s.api_key||'', base_url: s.base_url||'https://api.deepseek.com', model: s.model||'deepseek-chat' }; }
+
+function applyTheme() { document.documentElement.setAttribute('data-theme', getTheme()); const dt = document.getElementById('darkModeToggle'); if(dt) dt.checked = getTheme() === 'dark'; }
+function applyFontSize() { document.documentElement.setAttribute('data-font', getFontSize()); document.querySelectorAll('.font-size-btn').forEach(b => { b.classList.toggle('selected', b.classList.contains(getFontSize())); }); }
+function applyLangUI() { document.querySelectorAll('.lang-btn').forEach(b => { b.classList.toggle('selected', b.classList.contains(getLanguage())); }); }
+
+function toggleTheme() { saveAll({ theme: getTheme() === 'light' ? 'dark' : 'light' }); applyTheme(); }
+function onDarkModeToggle(v) { saveAll({ theme: v ? 'dark' : 'light' }); applyTheme(); }
+function setFontSize(s) { saveAll({ fontSize: s }); applyFontSize(); }
+function setLanguage(l) { saveAll({ lang: l }); applyLangUI(); applyI18n(); }
+function updateSettingsBtn() { const s = loadAll(); document.getElementById('settingsBtn').classList.toggle('active', !!s.api_key); }
+
+function openSettings() {
+  const s = loadAll();
+  document.getElementById('darkModeToggle').checked = getTheme() === 'dark';
+  applyFontSize(); applyLangUI();
+  document.getElementById('apiKeyInput').value = s.api_key || '';
+  document.getElementById('baseUrlInput').value = s.base_url || 'https://api.deepseek.com';
+  document.getElementById('modelInput').value = s.model || 'deepseek-chat';
+  const hasKey = !!s.api_key;
+  const cb = document.getElementById('settingsCancelBtn'); cb.style.display = ''; cb.textContent = hasKey ? t('cancelBtn') : t('skipBtn');
+  document.querySelector('.modal h3').innerHTML = t(hasKey ? 'apiConfiguredTitle' : 'newUserTitle');
+  document.querySelector('.modal .modal-desc').innerHTML = t(hasKey ? 'apiConfiguredDesc' : 'newUserDesc');
+  document.getElementById('settingsOverlay').classList.add('show');
+  setTimeout(() => { if (!document.getElementById('apiKeyInput').value) document.getElementById('apiKeyInput').focus(); }, 150);
+}
+function closeSettings() { document.getElementById('settingsOverlay').classList.remove('show'); }
+function saveSettings() {
+  const ak = document.getElementById('apiKeyInput').value.trim();
+  if (!ak) { alert(t('fillApiKey')); return; }
+  saveAll({ api_key: ak, base_url: document.getElementById('baseUrlInput').value.trim()||'https://api.deepseek.com', model: document.getElementById('modelInput').value.trim()||'deepseek-chat' });
+  updateSettingsBtn(); closeSettings();
+  const w = document.getElementById('messages').querySelector('.welcome');
+  if (w) w.querySelector('p').innerHTML = t('welcomeReady');
+}
+function clearSettings() { if (!confirm(t('confirmClear'))) return; localStorage.removeItem(SK); history = []; updateSettingsBtn(); applyTheme(); applyFontSize(); applyLangUI(); applyI18n(); closeSettings(); setTimeout(openSettings, 200); }
+document.getElementById('settingsOverlay').addEventListener('click', function(e) { if (e.target === this) closeSettings(); });
+
+// ── Chat ──
+const input = document.getElementById('queryInput');
+const btn = document.getElementById('sendBtn');
+const messages = document.getElementById('messages');
+const chatArea = document.getElementById('chatArea');
+let history = [];
+
+input.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); } });
+function scrollBottom() { requestAnimationFrame(() => { chatArea.scrollTop = chatArea.scrollHeight; }); }
+function sendQuick(t) { input.value = t; sendMessage(); }
+function removeWelcome() { const w = messages.querySelector('.welcome'); if (w) w.remove(); }
+function addMessage(role, content) {
+  removeWelcome();
+  const div = document.createElement('div'); div.className = `msg ${role}`;
+  const av = document.createElement('div'); av.className = 'avatar-icon'; av.textContent = role === 'user' ? (getLanguage() === 'en' ? 'Me' : '我') : '岐';
+  const bubble = document.createElement('div'); bubble.className = 'bubble';
+  if (role === 'assistant') { bubble.innerHTML = marked.parse(content); } else { bubble.textContent = content; }
+  div.appendChild(av); div.appendChild(bubble); messages.appendChild(div); scrollBottom();
+}
+function addTyping() {
+  removeWelcome();
+  const div = document.createElement('div'); div.className = 'msg assistant'; div.id = 'typingMsg';
+  const av = document.createElement('div'); av.className = 'avatar-icon'; av.textContent = '岐';
+  const bubble = document.createElement('div'); bubble.className = 'bubble'; bubble.innerHTML = '<div class="typing-dots"><span></span><span></span><span></span></div>';
+  div.appendChild(av); div.appendChild(bubble); messages.appendChild(div); scrollBottom();
+}
+function removeTyping() { const t = document.getElementById('typingMsg'); if (t) t.remove(); }
+
+async function sendMessage() {
+  const query = input.value.trim(); if (!query) return;
+  const api = getApi(); if (!api.api_key) { openSettings(); return; }
+  input.value = ''; btn.disabled = true;
+  addMessage('user', query); addTyping();
+  try {
+    // 1. 本地术语检索
+    const terms = searchTerms(query);
+    // 2. 构建消息
+    const termData = JSON.stringify(terms, null, 2);
+    const userMsg = `用户查询：${query}\n\n术语库匹配结果（可能为空）：\n${termData}`;
+    const msgs = [{ role: 'system', content: SYSTEM_PROMPT }];
+    history.slice(-20).forEach(m => msgs.push(m));
+    msgs.push({ role: 'user', content: userMsg });
+    // 3. 直连 LLM API
+    const resp = await fetch(`${api.base_url.replace(/\/+$/, '')}/chat/completions`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${api.api_key}` },
+      body: JSON.stringify({ model: api.model, max_tokens: 2000, messages: msgs }),
+    });
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      if (resp.status === 401) throw new Error(t('needApiKey'));
+      throw new Error(err.error?.message || `API 错误 (${resp.status})`);
+    }
+    const data = await resp.json();
+    const reply = data.choices[0].message.content;
+    removeTyping(); addMessage('assistant', reply);
+    history.push({ role: 'user', content: query }, { role: 'assistant', content: reply });
+    if (history.length > 40) history = history.slice(-40);
+  } catch (err) {
+    removeTyping();
+    addMessage('assistant', `⚠️ ${escapeHtml(err.message)}\n\n${t('apiError')}`);
+  } finally { btn.disabled = false; input.focus(); }
+}
+
+function escapeHtml(s) { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; }
+
+// ── Init ──
+applyTheme(); applyFontSize(); applyI18n(); updateSettingsBtn();
+if (!loadAll().api_key) setTimeout(openSettings, 500);
+input.focus();
+</script>
+</body>
+</html>
